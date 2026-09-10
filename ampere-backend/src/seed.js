@@ -1,0 +1,291 @@
+require('dotenv').config();
+const bcrypt = require('bcryptjs');
+const connectDB = require('./config/db');
+const Category = require('./models/Category');
+const Product = require('./models/Product');
+const Coupon = require('./models/Coupon');
+const PaymentSettings = require('./models/PaymentSettings');
+const MLMSettings = require('./models/MLMSettings');
+const RankDefinition = require('./models/RankDefinition');
+const Banner = require('./models/Banner');
+const User = require('./models/User');
+
+const categorySeeds = [
+  { name: 'Medicines', subtitle: 'Care you can trust', sortOrder: 1 },
+  { name: 'Ayurveda', subtitle: 'Natural & Safe', sortOrder: 2 },
+  { name: 'Personal Care', subtitle: 'Everyday essentials', sortOrder: 3 },
+  { name: 'Nutrition', subtitle: 'Fuel your body', sortOrder: 4 },
+  { name: 'Diabetes Care', subtitle: 'Manage with confidence', sortOrder: 5 },
+  { name: 'Medical Devices', subtitle: 'Monitor at home', sortOrder: 6 },
+  { name: 'Heart Care', subtitle: 'Stay heart healthy', sortOrder: 7 },
+  { name: 'Bone Health', subtitle: 'Strength for life', sortOrder: 8 },
+  { name: 'Baby Care', subtitle: 'Gentle & safe', sortOrder: 9 },
+  { name: 'Fitness', subtitle: 'Move more', sortOrder: 10 },
+];
+
+const productSeeds = [
+  {
+    name: 'Himalaya Ashwagandha Wellness Tablets',
+    category: 'Ayurveda',
+    subtitle: '60 Tablets',
+    description: 'Helps reduce stress, improves stamina and supports overall well-being.',
+    price: 299,
+    mrp: 375,
+    pv: 150,
+    stock: 120,
+    isFeatured: true,
+    isTrending: true,
+    rating: 4.6,
+    numReviews: 1245,
+  },
+  {
+    name: 'Accu-Chek Active Strips',
+    category: 'Diabetes Care',
+    subtitle: '50s',
+    description: 'Blood glucose test strips for accurate, everyday monitoring.',
+    price: 679,
+    mrp: 799,
+    pv: 340,
+    stock: 80,
+    isFeatured: true,
+    rating: 4.4,
+    numReviews: 512,
+  },
+  {
+    name: 'Ensure Diabetes Care',
+    category: 'Nutrition',
+    subtitle: '400g Powder',
+    description: 'Balanced nutrition drink designed for people managing diabetes.',
+    price: 899,
+    mrp: 999,
+    pv: 450,
+    stock: 40,
+    isTrending: true,
+    rating: 4.5,
+    numReviews: 210,
+  },
+  {
+    name: 'Dabur Chwanprash',
+    category: 'Ayurveda',
+    subtitle: '500g',
+    description: 'Traditional Ayurvedic immunity booster made with amla and herbs.',
+    price: 240,
+    mrp: 280,
+    pv: 120,
+    stock: 100,
+    isTrending: true,
+    rating: 4.3,
+    numReviews: 890,
+  },
+  {
+    name: 'Volini Pain Relief Gel',
+    category: 'Medicines',
+    subtitle: '50g',
+    description: 'Fast-acting topical gel for muscle and joint pain relief.',
+    price: 189,
+    mrp: 220,
+    pv: 90,
+    stock: 150,
+    isTrending: true,
+    rating: 4.5,
+    numReviews: 670,
+  },
+  {
+    name: 'Revital H',
+    category: 'Nutrition',
+    subtitle: '30 Capsules',
+    description: 'Daily multivitamin for energy, immunity and strength.',
+    price: 160,
+    mrp: 190,
+    pv: 80,
+    stock: 90,
+    isTrending: true,
+    rating: 4.2,
+    numReviews: 430,
+  },
+  {
+    name: 'Paracetamol 650mg',
+    category: 'Medicines',
+    subtitle: 'Strip of 15',
+    description: 'For fever and mild to moderate pain relief.',
+    price: 30,
+    mrp: 35,
+    pv: 15,
+    stock: 300,
+    rating: 4.1,
+    numReviews: 95,
+  },
+  {
+    name: 'Vitamin D3 Tablets',
+    category: 'Nutrition',
+    subtitle: '60 Tablets',
+    description: 'Supports bone health and immunity.',
+    price: 210,
+    mrp: 250,
+    pv: 100,
+    stock: 140,
+    rating: 4.3,
+    numReviews: 320,
+  },
+  {
+    name: 'Omega 3 Fish Oil',
+    category: 'Nutrition',
+    subtitle: '60 Softgels',
+    description: 'Supports heart and brain health.',
+    price: 450,
+    mrp: 550,
+    pv: 220,
+    stock: 70,
+    rating: 4.4,
+    numReviews: 180,
+  },
+  {
+    name: 'Whey Protein Powder',
+    category: 'Fitness',
+    subtitle: '1kg',
+    description: 'High-quality whey protein for muscle recovery and growth.',
+    price: 1499,
+    mrp: 1799,
+    pv: 750,
+    stock: 35,
+    isFeatured: true,
+    rating: 4.5,
+    numReviews: 260,
+  },
+];
+
+async function seed() {
+  await connectDB();
+
+  await Promise.all([
+    Category.deleteMany({}),
+    Product.deleteMany({}),
+    Coupon.deleteMany({}),
+    RankDefinition.deleteMany({}),
+    Banner.deleteMany({}),
+  ]);
+
+  await Banner.insertMany([
+    {
+      title: 'Your Health\nOur Priority',
+      subtitle: 'Up to 30% Off',
+      imageUrl: 'https://images.pexels.com/photos/20140029/pexels-photo-20140029.jpeg?cs=srgb&auto=compress&w=400',
+      linkType: 'none',
+      sortOrder: 1,
+      active: true,
+    },
+  ]);
+
+  await RankDefinition.insertMany([
+    {
+      name: 'Star Performer',
+      sortOrder: 1,
+      criteria: { minCumulativeTeamPV: 500, minDirectReferrals: 1, minTeamSize: 1 },
+    },
+    {
+      name: 'Star Platinum',
+      sortOrder: 2,
+      criteria: { minCumulativeTeamPV: 2000, minDirectReferrals: 3, minTeamSize: 5 },
+    },
+    {
+      name: 'Star Pearl',
+      sortOrder: 3,
+      criteria: { minCumulativeTeamPV: 5000, minDirectReferrals: 5, minTeamSize: 15 },
+    },
+    {
+      name: 'Star Ruby',
+      sortOrder: 4,
+      criteria: { minCumulativeTeamPV: 15000, minDirectReferrals: 8, minTeamSize: 40 },
+    },
+    {
+      name: 'Diamond',
+      sortOrder: 5,
+      criteria: { minCumulativeTeamPV: 40000, minDirectReferrals: 12, minTeamSize: 100 },
+    },
+  ]);
+
+  const categories = await Category.insertMany(categorySeeds);
+  const categoryByName = Object.fromEntries(categories.map((c) => [c.name, c._id]));
+
+  await Product.insertMany(
+    productSeeds.map((p) => ({ ...p, category: categoryByName[p.category] }))
+  );
+
+  await Coupon.insertMany([
+    { code: 'WELCOME10', discountType: 'percent', discountValue: 10, minOrderValue: 300, active: true },
+    { code: 'FLAT50', discountType: 'flat', discountValue: 50, minOrderValue: 500, active: true },
+  ]);
+
+  const settings = await PaymentSettings.getSingleton();
+  settings.upiId = settings.upiId || 'ampere@upi';
+  settings.payeeName = settings.payeeName || 'Ampere Health Store';
+  await settings.save();
+
+  await MLMSettings.getSingleton();
+
+  const adminEmail = (process.env.ADMIN_SEED_EMAIL || 'admin@ampere.com').toLowerCase();
+  const adminPasswordHash = await bcrypt.hash(process.env.ADMIN_SEED_PASSWORD || 'Admin@12345', 10);
+  await User.findOneAndUpdate(
+    { email: adminEmail },
+    { name: 'Ampere Admin', email: adminEmail, passwordHash: adminPasswordHash, role: 'admin' },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+
+  // Root distributor: bootstraps the mandatory-sponsor MLM tree (sponsor: null is only valid here).
+  const rootPasswordHash = await bcrypt.hash('RootPass@123', 10);
+  const root = await User.findOneAndUpdate(
+    { email: 'root@ampere.internal' },
+    {
+      name: 'Ampere Root',
+      email: 'root@ampere.internal',
+      passwordHash: rootPasswordHash,
+      role: 'customer',
+      referralCode: 'AMPEREROOT',
+      sponsor: null,
+      uplineChain: [],
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+
+  const demoPasswordHash = await bcrypt.hash('Test@1234', 10);
+  await User.findOneAndUpdate(
+    { email: 'rajesh@example.com' },
+    {
+      name: 'Rajesh Puzhakkal',
+      email: 'rajesh@example.com',
+      passwordHash: demoPasswordHash,
+      phone: '+91 96338 86333',
+      role: 'customer',
+      rewardsPoints: 120,
+      referralCode: 'RAJESH01',
+      sponsor: root._id,
+      uplineChain: [root._id],
+      addresses: [
+        {
+          label: 'Home',
+          contactName: 'Rajesh Puzhakkal',
+          phone: '+91 96338 86333',
+          line: 'Aikkara Towers, Ullyakovil Rd, near Nairs Hospital, Asramam',
+          city: 'Kollam',
+          state: 'Kerala',
+          pincode: '691002',
+          isDefault: true,
+        },
+      ],
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+
+  await User.updateOne({ _id: root._id }, { $set: { directReferralsCount: 1, teamSize: 1 } });
+
+  console.log(`Seeded ${categories.length} categories, ${productSeeds.length} products, 2 coupons.`);
+  console.log(`Admin login: ${adminEmail} / ${process.env.ADMIN_SEED_PASSWORD || 'Admin@12345'}`);
+  console.log('Demo customer login: rajesh@example.com / Test@1234 (referral code: RAJESH01)');
+  console.log('Root distributor login: root@ampere.internal / RootPass@123 (referral code: AMPEREROOT)');
+  process.exit(0);
+}
+
+seed().catch((err) => {
+  console.error('Seed failed', err);
+  process.exit(1);
+});

@@ -1,0 +1,43 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# env / secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# build output
+dist/
+dist-ssr/
+build/
+web-build/
+**/dist/
+.expo/
+expo-env.d.ts
+*.tsbuildinfo
+
+# backend uploads (runtime data)
+ampere-backend/uploads/*
+!ampere-backend/uploads/.gitkeep
+
+# logs
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+pnpm-debug.log*
+
+# editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.sw?
+
+# claude code local state
+.claude/

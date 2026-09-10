@@ -1,0 +1,3318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ampere Health - Full App Prototype</title>
+<style>
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    background:#0d0d0f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  .stage{
+    width:420px;
+    height:800px;
+    position:relative;
+  }
+  iframe.scr{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:none;
+    display:none;
+    background:transparent;
+  }
+  iframe.scr.active{display:block;}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <iframe id="frame-signin" class="scr active" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Welcome Back - Sign In</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#121512;
+    --field:#151815;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --green-dark:#28a648;
+    --text:#ffffff;
+    --muted:#8c928d;
+    --placeholder:#5c625d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  /* Status bar */
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .back-row{
+    padding:8px 20px 0;
+  }
+  .back-btn{
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-size:20px;
+  }
+
+  .content{
+    flex:1;
+    padding:6px 24px 14px;
+    overflow:hidden;
+  }
+
+  h1.title{
+    font-size:25px;
+    font-weight:800;
+    margin:10px 0 5px;
+    color:var(--text);
+    letter-spacing:.1px;
+  }
+  p.subtitle{
+    margin:0 0 4px;
+    color:var(--muted);
+    font-size:13.5px;
+  }
+
+  /* Illustration */
+  .illustration{
+    width:100%;
+    height:140px;
+    margin:2px 0 8px;
+  }
+
+  label{
+    display:block;
+    color:var(--text);
+    font-size:13px;
+    font-weight:700;
+    margin:10px 0 6px;
+  }
+  .field{
+    position:relative;
+  }
+  input{
+    width:100%;
+    background:var(--field);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-size:14px;
+    padding:12px 16px;
+    border-radius:10px;
+    outline:none;
+  }
+  input::placeholder{color:var(--placeholder);}
+  input:focus{border-color:var(--green-dark);}
+  .eye{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+    cursor:pointer;
+  }
+
+  .forgot{
+    text-align:right;
+    margin-top:8px;
+  }
+  .forgot a{
+    color:var(--green);
+    font-size:13px;
+    font-weight:600;
+    text-decoration:none;
+  }
+
+  .signin-btn{
+    width:100%;
+    margin-top:14px;
+    background:#3ecf5b;
+    color:#08150c;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:.2px;
+    cursor:pointer;
+    box-shadow:none;
+  }
+  .signin-btn:active{transform:translateY(1px);}
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:16px 0 12px;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+  .divider::before,.divider::after{
+    content:&quot;&quot;;
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  .socials{
+    display:flex;
+    gap:10px;
+  }
+  .social-btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    border:1px solid var(--border);
+    background:var(--field);
+    border-radius:999px;
+    padding:11px 6px;
+    color:var(--text);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .social-btn svg{width:17px;height:17px;flex-shrink:0;}
+
+  .signup{
+    text-align:center;
+    margin-top:16px;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+  .signup a{
+    color:var(--green);
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;back-row&quot;>
+    <div class=&quot;back-btn&quot;>&amp;#8249;</div>
+  </div>
+
+  <div class=&quot;content&quot;>
+    <h1 class=&quot;title&quot;>Welcome Back!</h1>
+    <p class=&quot;subtitle&quot;>Please sign in to continue</p>
+
+    <!-- Illustration: medicine bottles, pills, leaves, shield -->
+    <svg class=&quot;illustration&quot; viewBox=&quot;0 0 340 175&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;>
+      <defs>
+        <linearGradient id=&quot;greenBottle&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;1&quot; y2=&quot;1&quot;>
+          <stop offset=&quot;0%&quot; stop-color=&quot;#3a7a54&quot;/>
+          <stop offset=&quot;55%&quot; stop-color=&quot;#123423&quot;/>
+          <stop offset=&quot;100%&quot; stop-color=&quot;#081813&quot;/>
+        </linearGradient>
+        <linearGradient id=&quot;orangeBottle&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;1&quot; y2=&quot;1&quot;>
+          <stop offset=&quot;0%&quot; stop-color=&quot;#e8974a&quot;/>
+          <stop offset=&quot;60%&quot; stop-color=&quot;#9a5a1e&quot;/>
+          <stop offset=&quot;100%&quot; stop-color=&quot;#5c350f&quot;/>
+        </linearGradient>
+        <linearGradient id=&quot;shieldGrad&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+          <stop offset=&quot;0%&quot; stop-color=&quot;#4be072&quot;/>
+          <stop offset=&quot;100%&quot; stop-color=&quot;#0f3b1f&quot;/>
+        </linearGradient>
+        <radialGradient id=&quot;glow&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; r=&quot;50%&quot;>
+          <stop offset=&quot;0%&quot; stop-color=&quot;#3ecf5b&quot; stop-opacity=&quot;0.28&quot;/>
+          <stop offset=&quot;100%&quot; stop-color=&quot;#3ecf5b&quot; stop-opacity=&quot;0&quot;/>
+        </radialGradient>
+      </defs>
+
+      <circle cx=&quot;205&quot; cy=&quot;80&quot; r=&quot;95&quot; fill=&quot;url(#glow)&quot;/>
+      <ellipse cx=&quot;195&quot; cy=&quot;150&quot; rx=&quot;120&quot; ry=&quot;10&quot; fill=&quot;#000&quot; opacity=&quot;0.4&quot;/>
+
+      <!-- leaves top right -->
+      <path d=&quot;M298 30c14-16 34-18 48-8-6 16-24 26-42 24-5-1-8-9-6-16z&quot; fill=&quot;#3ecf5b&quot; opacity=&quot;0.9&quot;/>
+      <path d=&quot;M290 18c8-12 22-16 32-11-1 12-13 22-27 21-3-1-6-6-5-10z&quot; fill=&quot;#2ea34a&quot; opacity=&quot;0.85&quot;/>
+
+      <!-- orange bottle, behind-left -->
+      <g>
+        <rect x=&quot;55&quot; y=&quot;85&quot; width=&quot;50&quot; height=&quot;62&quot; rx=&quot;9&quot; fill=&quot;url(#orangeBottle)&quot;/>
+        <rect x=&quot;68&quot; y=&quot;70&quot; width=&quot;24&quot; height=&quot;18&quot; rx=&quot;3&quot; fill=&quot;#4a2a10&quot;/>
+        <rect x=&quot;72&quot; y=&quot;58&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;2&quot; fill=&quot;#2e1a09&quot;/>
+        <rect x=&quot;61&quot; y=&quot;103&quot; width=&quot;38&quot; height=&quot;26&quot; rx=&quot;4&quot; fill=&quot;#f6ecd9&quot; opacity=&quot;0.92&quot;/>
+        <rect x=&quot;65&quot; y=&quot;109&quot; width=&quot;30&quot; height=&quot;3&quot; rx=&quot;1.5&quot; fill=&quot;#c9a877&quot; opacity=&quot;0.8&quot;/>
+        <rect x=&quot;65&quot; y=&quot;115&quot; width=&quot;22&quot; height=&quot;3&quot; rx=&quot;1.5&quot; fill=&quot;#c9a877&quot; opacity=&quot;0.6&quot;/>
+      </g>
+
+      <!-- main green bottle, center -->
+      <g>
+        <rect x=&quot;140&quot; y=&quot;42&quot; width=&quot;72&quot; height=&quot;112&quot; rx=&quot;12&quot; fill=&quot;url(#greenBottle)&quot;/>
+        <rect x=&quot;158&quot; y=&quot;24&quot; width=&quot;36&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#0a1f14&quot;/>
+        <rect x=&quot;164&quot; y=&quot;10&quot; width=&quot;24&quot; height=&quot;16&quot; rx=&quot;2&quot; fill=&quot;#06140d&quot;/>
+        <!-- medical cross badge -->
+        <circle cx=&quot;176&quot; cy=&quot;95&quot; r=&quot;19&quot; fill=&quot;#0c2317&quot; stroke=&quot;#3ecf5b&quot; stroke-width=&quot;1.5&quot; opacity=&quot;0.9&quot;/>
+        <rect x=&quot;172&quot; y=&quot;86&quot; width=&quot;8&quot; height=&quot;18&quot; rx=&quot;2&quot; fill=&quot;#eafff0&quot;/>
+        <rect x=&quot;167&quot; y=&quot;91&quot; width=&quot;18&quot; height=&quot;8&quot; rx=&quot;2&quot; fill=&quot;#eafff0&quot;/>
+        <rect x=&quot;150&quot; y=&quot;120&quot; width=&quot;52&quot; height=&quot;26&quot; rx=&quot;4&quot; fill=&quot;#dff2e4&quot; opacity=&quot;0.14&quot;/>
+      </g>
+
+      <!-- shield, right -->
+      <g>
+        <path d=&quot;M262 45l28-11 28 11v26c0 23-13 40-28 47-15-7-28-24-28-47V45z&quot; fill=&quot;url(#shieldGrad)&quot;/>
+        <rect x=&quot;284&quot; y=&quot;56&quot; width=&quot;6&quot; height=&quot;24&quot; rx=&quot;2&quot; fill=&quot;#eafff0&quot;/>
+        <rect x=&quot;278&quot; y=&quot;65&quot; width=&quot;18&quot; height=&quot;6&quot; rx=&quot;2&quot; fill=&quot;#eafff0&quot;/>
+      </g>
+
+      <!-- scattered pills bottom -->
+      <ellipse cx=&quot;95&quot; cy=&quot;150&quot; rx=&quot;9&quot; ry=&quot;5.5&quot; fill=&quot;#f6ecd9&quot;/>
+      <ellipse cx=&quot;112&quot; cy=&quot;158&quot; rx=&quot;9&quot; ry=&quot;5.5&quot; fill=&quot;#e0c9a3&quot; transform=&quot;rotate(20 112 158)&quot;/>
+      <ellipse cx=&quot;225&quot; cy=&quot;156&quot; rx=&quot;8&quot; ry=&quot;5&quot; fill=&quot;#f6ecd9&quot; transform=&quot;rotate(-10 225 156)&quot;/>
+      <ellipse cx=&quot;245&quot; cy=&quot;148&quot; rx=&quot;8&quot; ry=&quot;5&quot; fill=&quot;#e0c9a3&quot; transform=&quot;rotate(15 245 148)&quot;/>
+      <circle cx=&quot;130&quot; cy=&quot;150&quot; r=&quot;5&quot; fill=&quot;#3ecf5b&quot; opacity=&quot;0.85&quot;/>
+      <circle cx=&quot;260&quot; cy=&quot;130&quot; r=&quot;4&quot; fill=&quot;#3ecf5b&quot; opacity=&quot;0.6&quot;/>
+    </svg>
+
+    <label for=&quot;email&quot;>Email Address</label>
+    <div class=&quot;field&quot;>
+      <input id=&quot;email&quot; type=&quot;email&quot; placeholder=&quot;Enter your email&quot;>
+    </div>
+
+    <label for=&quot;password&quot;>Password</label>
+    <div class=&quot;field&quot;>
+      <input id=&quot;password&quot; type=&quot;password&quot; placeholder=&quot;Enter your password&quot;>
+      <span class=&quot;eye&quot;>
+        <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;>
+          <path d=&quot;M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z&quot;/>
+          <circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3&quot;/>
+          <line x1=&quot;3&quot; y1=&quot;21&quot; x2=&quot;21&quot; y2=&quot;3&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;/>
+        </svg>
+      </span>
+    </div>
+
+    <div class=&quot;forgot&quot;><a href=&quot;#&quot;>Forgot Password?</a></div>
+
+    <button class=&quot;signin-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>Sign In</button>
+
+    <div class=&quot;divider&quot;>Or continue with</div>
+
+    <div class=&quot;socials&quot;>
+      <button class=&quot;social-btn&quot;>
+        <svg viewBox=&quot;0 0 48 48&quot;><path fill=&quot;#FFC107&quot; d=&quot;M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z&quot;/><path fill=&quot;#FF3D00&quot; d=&quot;M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4c-7.5 0-14 4.2-17.7 10.7z&quot;/><path fill=&quot;#4CAF50&quot; d=&quot;M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.4C29.4 34.7 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.9 39.7 16.4 44 24 44z&quot;/><path fill=&quot;#1976D2&quot; d=&quot;M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.5 5.4C39.7 37.1 44 31 44 24c0-1.3-.1-2.7-.4-3.5z&quot;/></svg>
+        Google
+      </button>
+      <button class=&quot;social-btn&quot;>
+        <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;#fff&quot;><path d=&quot;M16.365 1.43c0 1.14-.42 2.06-1.26 2.86-.9.87-2.02 1.36-3.02 1.28-.13-1.09.44-2.2 1.25-2.98.85-.82 2.16-1.42 3.03-1.16zM20.55 17.16c-.5 1.15-1.09 2.15-1.83 3.15-.86 1.15-1.86 2.57-3.2 2.6-1.19.03-1.55-.76-3.22-.76-1.68 0-2.08.74-3.22.79-1.31.05-2.31-1.24-3.18-2.38-1.9-2.51-3.35-7.1-1.4-10.2 1-1.55 2.61-2.55 4.29-2.58 1.24-.02 2.36.83 3.16.83.79 0 2.24-1.03 3.77-.88.64.03 2.46.26 3.63 1.94-.09.06-2.17 1.27-2.15 3.79.03 3.02 2.64 4.02 2.65 4.7z&quot;/></svg>
+        Apple
+      </button>
+      <button class=&quot;social-btn&quot;>
+        <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;#3ecf5b&quot;><path d=&quot;M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.7.1.3 0 .7-.2 1L6.6 10.8z&quot;/></svg>
+        Phone
+      </button>
+    </div>
+
+    <div class=&quot;signup&quot;>Don't have an account? <a href=&quot;#&quot;>Sign Up</a></div>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-home" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Home - Healthcare App</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#14181450;
+    --field:#151815;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --green-dark:#28a648;
+    --text:#ffffff;
+    --muted:#8c928d;
+    --placeholder:#5c625d;
+    --red:#e5384d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:10px 22px 0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-top:6px;
+  }
+  .header h1{
+    font-size:21px;
+    font-weight:800;
+    color:var(--text);
+    margin:0 0 3px;
+  }
+  .header p{
+    margin:0;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+  .header-icons{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .icon-btn{
+    position:relative;
+    width:38px;height:38px;
+    border-radius:12px;
+    background:var(--field);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .badge{
+    position:absolute;
+    top:-5px;right:-5px;
+    background:var(--green);
+    color:#08150c;
+    font-size:9px;
+    font-weight:800;
+    width:16px;height:16px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg);
+  }
+
+  .search-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--field);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px 14px;
+    margin-top:16px;
+  }
+  .search-row input{
+    flex:1;
+    background:none;
+    border:none;
+    outline:none;
+    color:var(--text);
+    font-size:13.5px;
+  }
+  .search-row input::placeholder{color:var(--placeholder);}
+  .search-row svg{flex-shrink:0;color:var(--muted);}
+
+  .banner{
+    position:relative;
+    margin-top:16px;
+    border-radius:18px;
+    padding:18px 18px;
+    background:linear-gradient(135deg,#2a8f4c,#0f3d22);
+    overflow:hidden;
+    height:150px;
+  }
+  .banner h2{
+    color:#fff;
+    font-size:19px;
+    font-weight:800;
+    margin:0;
+    line-height:1.25;
+    position:relative;
+    z-index:2;
+  }
+  .banner .off{
+    color:#e9f7ec;
+    font-size:12px;
+    margin:6px 0 12px;
+    position:relative;
+    z-index:2;
+  }
+  .banner .shop-btn{
+    background:#fff;
+    color:#0f3d22;
+    border:none;
+    border-radius:999px;
+    padding:8px 18px;
+    font-size:12.5px;
+    font-weight:800;
+    position:relative;
+    z-index:2;
+  }
+  .banner-illustration{
+    position:absolute;
+    right:0;
+    bottom:0;
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:0 18px 18px 0;
+    -webkit-mask-image:linear-gradient(to left, black 60%, transparent 100%);
+    mask-image:linear-gradient(to left, black 60%, transparent 100%);
+  }
+
+  .section-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+  }
+  .section-row h3{
+    color:var(--text);
+    font-size:15.5px;
+    font-weight:800;
+    margin:0;
+  }
+  .section-row a{
+    color:var(--green);
+    font-size:12.5px;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  .categories{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+  }
+  .cat-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:7px;
+    flex:1;
+  }
+  .cat-circle{
+    width:56px;height:56px;
+    border-radius:50%;
+    background:var(--field);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cat-item span{
+    color:var(--text);
+    font-size:11px;
+    font-weight:600;
+    text-align:center;
+  }
+
+  .deals{
+    display:flex;
+    gap:12px;
+    margin-top:14px;
+  }
+  .deal-card{
+    flex:1;
+    background:var(--field);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:10px;
+    position:relative;
+  }
+  .deal-badge{
+    position:absolute;
+    top:8px;left:8px;
+    background:var(--red);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    padding:2px 7px;
+    border-radius:6px;
+    z-index:2;
+  }
+  .deal-card .deal-img{
+    width:100%;
+    height:72px;
+    object-fit:cover;
+    border-radius:8px;
+    display:block;
+  }
+  .deal-name{
+    color:var(--text);
+    font-size:12px;
+    font-weight:700;
+    margin:8px 0 1px;
+  }
+  .deal-sub{
+    color:var(--muted);
+    font-size:10.5px;
+  }
+  .deal-price{
+    color:var(--green);
+    font-weight:800;
+    font-size:13px;
+    margin-top:4px;
+  }
+
+  .bottom-nav{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 22px 10px;
+    border-top:1px solid var(--border);
+    background:var(--bg);
+  }
+  .nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    color:var(--muted);
+    position:relative;
+  }
+  .nav-item.active{color:var(--green);}
+  .nav-item span{font-size:9.5px;font-weight:600;}
+  .nav-badge{
+    position:absolute;
+    top:-4px;right:6px;
+    background:var(--green);
+    color:#08150c;
+    font-size:8px;
+    font-weight:800;
+    width:14px;height:14px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg);
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div>
+        <h1>Hello, Rajesh &amp;#128075;</h1>
+        <p>Find trusted healthcare products</p>
+      </div>
+      <div class=&quot;header-icons&quot;>
+        <div class=&quot;icon-btn&quot;>
+          <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9z&quot;/><path d=&quot;M13.7 21a2 2 0 01-3.4 0&quot;/></svg>
+        </div>
+        <div class=&quot;icon-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>
+          <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;#fff&quot; stroke=&quot;none&quot;/><circle cx=&quot;18&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;#fff&quot; stroke=&quot;none&quot;/><path d=&quot;M2 3h2l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.6L21 8H6&quot;/></svg>
+          <span class=&quot;badge&quot;>2</span>
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;search-row&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('search')&quot;>
+      <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
+      <input type=&quot;text&quot; placeholder=&quot;Search for medicines, products...&quot;>
+      <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
+    </div>
+
+    <div class=&quot;banner&quot;>
+      <h2>Your Health<br>Our Priority</h2>
+      <div class=&quot;off&quot;>Up to 30% Off</div>
+      <button class=&quot;shop-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('product')&quot;>Shop Now</button>
+
+      <img class=&quot;banner-illustration&quot; src=&quot;https://images.pexels.com/photos/20140029/pexels-photo-20140029.jpeg?cs=srgb&amp;auto=compress&amp;w=400&quot; alt=&quot;Health products&quot;>
+    </div>
+
+    <div class=&quot;section-row&quot;>
+      <h3>Categories</h3>
+      <a href=&quot;#&quot;>View all</a>
+    </div>
+    <div class=&quot;categories&quot;>
+      <div class=&quot;cat-item&quot;>
+        <div class=&quot;cat-circle&quot;>
+          <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;><rect x=&quot;7&quot; y=&quot;4&quot; width=&quot;10&quot; height=&quot;17&quot; rx=&quot;3&quot; fill=&quot;#2f8fd6&quot;/><rect x=&quot;9&quot; y=&quot;1.5&quot; width=&quot;6&quot; height=&quot;4&quot; rx=&quot;1&quot; fill=&quot;#0d4d80&quot;/><rect x=&quot;8&quot; y=&quot;12&quot; width=&quot;8&quot; height=&quot;6&quot; rx=&quot;1&quot; fill=&quot;#e8f4fc&quot;/></svg>
+        </div>
+        <span>Medicines</span>
+      </div>
+      <div class=&quot;cat-item&quot;>
+        <div class=&quot;cat-circle&quot;>
+          <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;><ellipse cx=&quot;12&quot; cy=&quot;20&quot; rx=&quot;7&quot; ry=&quot;2.5&quot; fill=&quot;#3a2a1c&quot;/><path d=&quot;M12 18c-4-3-6-9-3-14 3 3 4 8 3 14z&quot; fill=&quot;#4caf6d&quot;/><path d=&quot;M12 18c4-3 6-9 3-14-3 3-4 8-3 14z&quot; fill=&quot;#3ecf5b&quot;/></svg>
+        </div>
+        <span>Ayurveda</span>
+      </div>
+      <div class=&quot;cat-item&quot;>
+        <div class=&quot;cat-circle&quot;>
+          <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;><rect x=&quot;8&quot; y=&quot;6&quot; width=&quot;8&quot; height=&quot;15&quot; rx=&quot;3&quot; fill=&quot;#e77fb0&quot;/><rect x=&quot;10&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;4&quot; rx=&quot;1&quot; fill=&quot;#b34d84&quot;/></svg>
+        </div>
+        <span>Personal Care</span>
+      </div>
+      <div class=&quot;cat-item&quot;>
+        <div class=&quot;cat-circle&quot;>
+          <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;><rect x=&quot;6&quot; y=&quot;8&quot; width=&quot;12&quot; height=&quot;12&quot; rx=&quot;2&quot; fill=&quot;#e0a23c&quot;/><rect x=&quot;6&quot; y=&quot;8&quot; width=&quot;12&quot; height=&quot;4&quot; fill=&quot;#c9862a&quot;/><rect x=&quot;10&quot; y=&quot;4&quot; width=&quot;4&quot; height=&quot;5&quot; fill=&quot;#8f5c1e&quot;/></svg>
+        </div>
+        <span>Nutrition</span>
+      </div>
+    </div>
+
+    <div class=&quot;section-row&quot;>
+      <h3>Today's Deals</h3>
+      <a href=&quot;#&quot;>View all</a>
+    </div>
+    <div class=&quot;deals&quot;>
+      <div class=&quot;deal-card&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('product')&quot;>
+        <span class=&quot;deal-badge&quot;>-30%</span>
+        <img class=&quot;deal-img&quot; src=&quot;https://images.pexels.com/photos/7722638/pexels-photo-7722638.jpeg?cs=srgb&amp;auto=compress&amp;w=300&quot; alt=&quot;Himalaya Ashwagandha tablets&quot;>
+        <div class=&quot;deal-name&quot;>Himalaya Ashwagandha</div>
+        <div class=&quot;deal-sub&quot;>60 Tablets</div>
+        <div class=&quot;deal-price&quot;>&amp;#8377;299</div>
+      </div>
+      <div class=&quot;deal-card&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('product')&quot;>
+        <span class=&quot;deal-badge&quot;>-15%</span>
+        <img class=&quot;deal-img&quot; src=&quot;https://images.pexels.com/photos/6823389/pexels-photo-6823389.jpeg?cs=srgb&amp;auto=compress&amp;w=300&quot; alt=&quot;Accu-Chek test strips&quot;>
+        <div class=&quot;deal-name&quot;>Accu-Chek</div>
+        <div class=&quot;deal-sub&quot;>Active Strips (50s)</div>
+        <div class=&quot;deal-price&quot;>&amp;#8377;679</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-nav&quot;>
+    <div class=&quot;nav-item active&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;><path d=&quot;M12 2L2 10h3v10h6v-6h2v6h6V10h3z&quot;/></svg>
+      <span>Home</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('categories')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;3&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/></svg>
+      <span>Categories</span>
+    </div>
+    <div class=&quot;nav-item&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 21s-7.5-4.6-10-9.1C.5 8 2.4 4.5 6 4a5 5 0 016 2 5 5 0 016-2c3.6.5 5.5 4 4 7.9C19.5 16.4 12 21 12 21z&quot;/></svg>
+      <span>Wishlist</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;position:relative;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><circle cx=&quot;18&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><path d=&quot;M2 3h2l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.6L21 8H6&quot;/></svg>
+      <span class=&quot;nav-badge&quot;>2</span>
+      <span>Cart</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('profile')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/><path d=&quot;M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8&quot;/></svg>
+      <span>Profile</span>
+    </div>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-search" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Search</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#14181450;
+    --field:#151815;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:0 1 auto;
+    padding:6px 20px 20px;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:8px;
+  }
+  .back-btn{color:#fff;display:flex;align-items:center;}
+  .header h1{
+    font-size:17px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+
+  .search-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--field);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px 14px;
+    margin-top:16px;
+  }
+  .search-row input{
+    flex:1;
+    background:none;
+    border:none;
+    outline:none;
+    color:var(--text);
+    font-size:13px;
+  }
+  .search-row input::placeholder{color:#5c625d;}
+  .search-row svg{flex-shrink:0;color:var(--muted);}
+  .filter-btn{
+    width:40px;height:40px;
+    border-radius:12px;
+    background:var(--field);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    flex-shrink:0;
+    margin-left:10px;
+  }
+  .search-wrap{display:flex;align-items:center;}
+
+  .section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0 12px;
+  }
+  .section-title h3{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--text);
+    margin:0;
+  }
+  .section-title a{
+    color:var(--green);
+    font-size:12px;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  .tag-wrap{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+  }
+  .tag{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:8px 14px;
+    color:var(--text);
+    font-size:11.5px;
+    font-weight:600;
+  }
+
+  .trend-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .trend-row::-webkit-scrollbar{display:none;}
+  .trend-card{
+    flex:0 0 92px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px;
+  }
+  .trend-card .thumb{width:100%;height:60px;border-radius:8px;}
+  .trend-card .name{
+    color:var(--text);
+    font-size:10.5px;
+    font-weight:700;
+    margin:7px 0 2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .trend-card .sub{
+    color:var(--muted);
+    font-size:9px;
+    margin:0 0 4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .trend-card .price{color:var(--green);font-size:11px;font-weight:800;}
+
+  .recent-list{display:flex;flex-direction:column;gap:2px;}
+  .recent-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 2px;
+  }
+  .recent-item svg.clock{color:var(--muted);flex-shrink:0;}
+  .recent-item .txt{flex:1;color:var(--text);font-size:12.5px;font-weight:500;}
+  .recent-item .close{color:var(--muted);flex-shrink:0;}
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+        <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+      </div>
+      <h1>Search</h1>
+    </div>
+
+    <div class=&quot;search-wrap&quot;>
+      <div class=&quot;search-row&quot; style=&quot;flex:1;&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
+        <input type=&quot;text&quot; placeholder=&quot;Search for medicines, products...&quot;>
+      </div>
+      <div class=&quot;filter-btn&quot;>
+        <svg width=&quot;17&quot; height=&quot;17&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><line x1=&quot;4&quot; y1=&quot;6&quot; x2=&quot;20&quot; y2=&quot;6&quot;/><line x1=&quot;4&quot; y1=&quot;12&quot; x2=&quot;20&quot; y2=&quot;12&quot;/><line x1=&quot;4&quot; y1=&quot;18&quot; x2=&quot;20&quot; y2=&quot;18&quot;/><circle cx=&quot;9&quot; cy=&quot;6&quot; r=&quot;1.8&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><circle cx=&quot;16&quot; cy=&quot;12&quot; r=&quot;1.8&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><circle cx=&quot;11&quot; cy=&quot;18&quot; r=&quot;1.8&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;section-title&quot; style=&quot;margin-bottom:10px;&quot;>
+      <h3>Popular Searches</h3>
+    </div>
+    <div class=&quot;tag-wrap&quot;>
+      <span class=&quot;tag&quot;>Paracetamol</span>
+      <span class=&quot;tag&quot;>Vitamin D3</span>
+      <span class=&quot;tag&quot;>Omega 3</span>
+      <span class=&quot;tag&quot;>Accu-Chek Strips</span>
+      <span class=&quot;tag&quot;>Protein Powder</span>
+      <span class=&quot;tag&quot;>Ashwagandha</span>
+    </div>
+
+    <div class=&quot;section-title&quot;>
+      <h3>Trending Products</h3>
+      <a href=&quot;#&quot;>View all</a>
+    </div>
+    <div class=&quot;trend-row&quot;>
+      <div class=&quot;trend-card&quot;>
+        <svg class=&quot;thumb&quot; viewBox=&quot;0 0 92 60&quot;><rect width=&quot;92&quot; height=&quot;60&quot; rx=&quot;8&quot; fill=&quot;#0d1e2b&quot;/><rect x=&quot;30&quot; y=&quot;8&quot; width=&quot;32&quot; height=&quot;44&quot; rx=&quot;5&quot; fill=&quot;#2f8fd6&quot;/><rect x=&quot;35&quot; y=&quot;20&quot; width=&quot;22&quot; height=&quot;14&quot; fill=&quot;#eaf5fc&quot;/></svg>
+        <p class=&quot;name&quot;>Ensure Diabetes Care</p>
+        <p class=&quot;sub&quot;></p>
+        <span class=&quot;price&quot;>&amp;#8377;899</span>
+      </div>
+      <div class=&quot;trend-card&quot;>
+        <svg class=&quot;thumb&quot; viewBox=&quot;0 0 92 60&quot;><rect width=&quot;92&quot; height=&quot;60&quot; rx=&quot;8&quot; fill=&quot;#2a1608&quot;/><rect x=&quot;26&quot; y=&quot;10&quot; width=&quot;40&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#8a4a1e&quot;/><ellipse cx=&quot;46&quot; cy=&quot;18&quot; rx=&quot;16&quot; ry=&quot;6&quot; fill=&quot;#c9862a&quot;/></svg>
+        <p class=&quot;name&quot;>Dabur Chwanprash</p>
+        <p class=&quot;sub&quot;></p>
+        <span class=&quot;price&quot;>&amp;#8377;240</span>
+      </div>
+      <div class=&quot;trend-card&quot;>
+        <svg class=&quot;thumb&quot; viewBox=&quot;0 0 92 60&quot;><rect width=&quot;92&quot; height=&quot;60&quot; rx=&quot;8&quot; fill=&quot;#1a0d24&quot;/><rect x=&quot;34&quot; y=&quot;6&quot; width=&quot;24&quot; height=&quot;48&quot; rx=&quot;5&quot; fill=&quot;#6a2fae&quot;/><rect x=&quot;38&quot; y=&quot;20&quot; width=&quot;16&quot; height=&quot;10&quot; fill=&quot;#eee0fa&quot;/></svg>
+        <p class=&quot;name&quot;>Volini Pain Relief Gel</p>
+        <p class=&quot;sub&quot;></p>
+        <span class=&quot;price&quot;>&amp;#8377;189</span>
+      </div>
+      <div class=&quot;trend-card&quot;>
+        <svg class=&quot;thumb&quot; viewBox=&quot;0 0 92 60&quot;><rect width=&quot;92&quot; height=&quot;60&quot; rx=&quot;8&quot; fill=&quot;#0f2417&quot;/><rect x=&quot;30&quot; y=&quot;8&quot; width=&quot;32&quot; height=&quot;44&quot; rx=&quot;5&quot; fill=&quot;#1f5c38&quot;/><rect x=&quot;34&quot; y=&quot;22&quot; width=&quot;24&quot; height=&quot;12&quot; fill=&quot;#f4f1e8&quot;/></svg>
+        <p class=&quot;name&quot;>Revital H</p>
+        <p class=&quot;sub&quot;></p>
+        <span class=&quot;price&quot;>&amp;#8377;160</span>
+      </div>
+    </div>
+
+    <div class=&quot;section-title&quot;>
+      <h3>Recent Searches</h3>
+      <a href=&quot;#&quot;>Clear All</a>
+    </div>
+    <div class=&quot;recent-list&quot;>
+      <div class=&quot;recent-item&quot;>
+        <svg class=&quot;clock&quot; width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/><path d=&quot;M12 7v5l3 3&quot;/></svg>
+        <span class=&quot;txt&quot;>Ashwagandha</span>
+        <svg class=&quot;close&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/></svg>
+      </div>
+      <div class=&quot;recent-item&quot;>
+        <svg class=&quot;clock&quot; width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/><path d=&quot;M12 7v5l3 3&quot;/></svg>
+        <span class=&quot;txt&quot;>Accu-Chek Strips</span>
+        <svg class=&quot;close&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/></svg>
+      </div>
+      <div class=&quot;recent-item&quot;>
+        <svg class=&quot;clock&quot; width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/><path d=&quot;M12 7v5l3 3&quot;/></svg>
+        <span class=&quot;txt&quot;>Whey Protein</span>
+        <svg class=&quot;close&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/></svg>
+      </div>
+    </div>
+
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-categories" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Categories - Healthcare App</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --field:#14181450;
+    --card:#161a1650;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 20px 0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:10px;
+  }
+  .header-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .back-btn{color:#fff;font-size:20px;display:flex;align-items:center;}
+  .header h1{
+    font-size:19px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+  .search-icon{color:#fff;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+    margin-top:18px;
+  }
+  .cat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .cat-icon{
+    width:38px;height:38px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.05);
+  }
+  .cat-card .name{
+    color:var(--text);
+    font-size:12.5px;
+    font-weight:700;
+  }
+  .cat-card .sub{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:-6px;
+  }
+
+  .bottom-nav{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 22px 10px;
+    border-top:1px solid var(--border);
+    background:var(--bg);
+  }
+  .nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    color:var(--muted);
+    position:relative;
+  }
+  .nav-item.active{color:var(--green);}
+  .nav-item span{font-size:9.5px;font-weight:600;}
+  .nav-badge{
+    position:absolute;
+    top:-4px;right:6px;
+    background:var(--green);
+    color:#08150c;
+    font-size:8px;
+    font-weight:800;
+    width:14px;height:14px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg);
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;header-left&quot;>
+        <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+          <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+        </div>
+        <h1>Categories</h1>
+      </div>
+      <div class=&quot;search-icon&quot;>
+        <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;grid&quot;>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><g transform=&quot;rotate(-35 15 15)&quot;><rect x=&quot;8&quot; y=&quot;6&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;7&quot; fill=&quot;#f2a13a&quot;/><rect x=&quot;8&quot; y=&quot;15&quot; width=&quot;14&quot; height=&quot;9&quot; rx=&quot;7&quot; fill=&quot;#f5f0e6&quot;/></g></svg>
+        </div>
+        <div class=&quot;name&quot;>Medicines</div>
+        <div class=&quot;sub&quot;>Care you can trust</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><ellipse cx=&quot;14&quot; cy=&quot;19&quot; rx=&quot;9&quot; ry=&quot;5&quot; fill=&quot;#8fc9a0&quot;/><path d=&quot;M9 19c0-5 2-9 5-9s5 4 5 9&quot; fill=&quot;none&quot; stroke=&quot;#5a9a70&quot; stroke-width=&quot;1.6&quot;/><rect x=&quot;19&quot; y=&quot;4&quot; width=&quot;2.4&quot; height=&quot;12&quot; rx=&quot;1.2&quot; fill=&quot;#6b7a5c&quot; transform=&quot;rotate(20 20 10)&quot;/><circle cx=&quot;24&quot; cy=&quot;6&quot; r=&quot;2&quot; fill=&quot;#7fbf8f&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Ayurveda</div>
+        <div class=&quot;sub&quot;>Natural &amp;amp; Safe</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><rect x=&quot;7&quot; y=&quot;9&quot; width=&quot;16&quot; height=&quot;16&quot; rx=&quot;3&quot; fill=&quot;#2f6b3f&quot;/><rect x=&quot;7&quot; y=&quot;9&quot; width=&quot;16&quot; height=&quot;6&quot; fill=&quot;#3fae5c&quot;/><rect x=&quot;11&quot; y=&quot;4&quot; width=&quot;8&quot; height=&quot;6&quot; rx=&quot;1.5&quot; fill=&quot;#1f4a2c&quot;/><rect x=&quot;10&quot; y=&quot;17&quot; width=&quot;10&quot; height=&quot;2&quot; rx=&quot;1&quot; fill=&quot;#e8f4ea&quot; opacity=&quot;0.85&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Nutrition</div>
+        <div class=&quot;sub&quot;>Health Essentials</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><rect x=&quot;10&quot; y=&quot;9&quot; width=&quot;10&quot; height=&quot;17&quot; rx=&quot;4&quot; fill=&quot;#e05a86&quot;/><rect x=&quot;12&quot; y=&quot;4&quot; width=&quot;6&quot; height=&quot;6&quot; rx=&quot;1.5&quot; fill=&quot;#b34068&quot;/><ellipse cx=&quot;15&quot; cy=&quot;20&quot; rx=&quot;3&quot; ry=&quot;4&quot; fill=&quot;#f5a8bf&quot; opacity=&quot;0.7&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Personal Care</div>
+        <div class=&quot;sub&quot;>Daily Care</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><path d=&quot;M15 25s-9-5.5-9-12a5.5 5.5 0 019-4 5.5 5.5 0 019 4c0 6.5-9 12-9 12z&quot; fill=&quot;#e5384d&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Heart Care</div>
+        <div class=&quot;sub&quot;>Stay Strong</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><path d=&quot;M9 7c-2 0-3 2-2 4 0 1-1 2-1 3.5 0 1.8 1.5 3 1.5 4.5 0 1.5-1 2.5 0 4s3 1.5 4 0c1-1.2 2.5-1.2 4-1.2s3 0 4 1.2c1 1.5 3 1.5 4 0s0-2.5 0-4c0-1.5 1.5-2.7 1.5-4.5 0-1.5-1-2.5-1-3.5 1-2 0-4-2-4-1.5 0-2.5 1-3 2.2-.8 1.8-3.2 1.8-4 0-.5-1.2-1.5-2.2-3-2.2-1.5 0-2.5 1-3 2.2-.8 1.8-3.2 1.8-4 0-.5-1.2-1-2.2-2-2.2z&quot; fill=&quot;#d9b98a&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Bone Health</div>
+        <div class=&quot;sub&quot;>Stronger Together</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;9&quot; height=&quot;15&quot; rx=&quot;4&quot; fill=&quot;#f2f2ee&quot;/><rect x=&quot;12&quot; y=&quot;6&quot; width=&quot;5&quot; height=&quot;6&quot; rx=&quot;1.5&quot; fill=&quot;#c7c7bf&quot;/><circle cx=&quot;20&quot; cy=&quot;8&quot; r=&quot;2.4&quot; fill=&quot;#e8b84a&quot;/><rect x=&quot;11&quot; y=&quot;15&quot; width=&quot;7&quot; height=&quot;2&quot; fill=&quot;#9fd4c0&quot; opacity=&quot;0.8&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Baby Care</div>
+        <div class=&quot;sub&quot;>Gentle &amp;amp; Safe</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><rect x=&quot;8&quot; y=&quot;7&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;3&quot; fill=&quot;#2f8fd6&quot;/><rect x=&quot;10.5&quot; y=&quot;10&quot; width=&quot;9&quot; height=&quot;7&quot; rx=&quot;1&quot; fill=&quot;#eaf5fc&quot;/><rect x=&quot;11&quot; y=&quot;19&quot; width=&quot;3&quot; height=&quot;3&quot; rx=&quot;0.8&quot; fill=&quot;#eaf5fc&quot;/><rect x=&quot;16&quot; y=&quot;19&quot; width=&quot;3&quot; height=&quot;3&quot; rx=&quot;0.8&quot; fill=&quot;#eaf5fc&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Medical Devices</div>
+        <div class=&quot;sub&quot;>Advanced Care</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot;><rect x=&quot;7&quot; y=&quot;9&quot; width=&quot;14&quot; height=&quot;14&quot; rx=&quot;3&quot; fill=&quot;#2f8fd6&quot;/><rect x=&quot;9.5&quot; y=&quot;11.5&quot; width=&quot;9&quot; height=&quot;6&quot; rx=&quot;1&quot; fill=&quot;#eaf5fc&quot;/><rect x=&quot;21&quot; y=&quot;15&quot; width=&quot;4&quot; height=&quot;2&quot; fill=&quot;#2f8fd6&quot;/><rect x=&quot;24&quot; y=&quot;13.5&quot; width=&quot;2&quot; height=&quot;5&quot; rx=&quot;1&quot; fill=&quot;#2f8fd6&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Diabetes Care</div>
+        <div class=&quot;sub&quot;>Manage Better</div>
+      </div>
+
+      <div class=&quot;cat-card&quot;>
+        <div class=&quot;cat-icon&quot;>
+          <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 30 30&quot; stroke=&quot;#e8e8e2&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;><line x1=&quot;4&quot; y1=&quot;15&quot; x2=&quot;26&quot; y2=&quot;15&quot;/><rect x=&quot;2&quot; y=&quot;11&quot; width=&quot;4&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#e8e8e2&quot; stroke=&quot;none&quot;/><rect x=&quot;24&quot; y=&quot;11&quot; width=&quot;4&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#e8e8e2&quot; stroke=&quot;none&quot;/><rect x=&quot;7&quot; y=&quot;13&quot; width=&quot;3&quot; height=&quot;4&quot; fill=&quot;#e8e8e2&quot; stroke=&quot;none&quot;/><rect x=&quot;20&quot; y=&quot;13&quot; width=&quot;3&quot; height=&quot;4&quot; fill=&quot;#e8e8e2&quot; stroke=&quot;none&quot;/></svg>
+        </div>
+        <div class=&quot;name&quot;>Fitness</div>
+        <div class=&quot;sub&quot;>Stay Fit</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-nav&quot;>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 2L2 10h3v10h6v-6h2v6h6V10h3z&quot;/></svg>
+      <span>Home</span>
+    </div>
+    <div class=&quot;nav-item active&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;><rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;3&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/></svg>
+      <span>Categories</span>
+    </div>
+    <div class=&quot;nav-item&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 21s-7.5-4.6-10-9.1C.5 8 2.4 4.5 6 4a5 5 0 016 2 5 5 0 016-2c3.6.5 5.5 4 4 7.9C19.5 16.4 12 21 12 21z&quot;/></svg>
+      <span>Wishlist</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;position:relative;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><circle cx=&quot;18&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><path d=&quot;M2 3h2l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.6L21 8H6&quot;/></svg>
+      <span class=&quot;nav-badge&quot;>2</span>
+      <span>Cart</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('profile')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/><path d=&quot;M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8&quot;/></svg>
+      <span>Profile</span>
+    </div>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-product" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Product Detail - Ashwagandha</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --field:#14181450;
+    --card:#161a1650;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --green-dark:#28a648;
+    --text:#ffffff;
+    --muted:#8c928d;
+    --strike:#5c625d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 20px 14px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:8px;
+  }
+  .icon-btn{color:#fff;display:flex;align-items:center;}
+  .header-right{display:flex;gap:16px;}
+
+  .hero{
+    position:relative;
+    margin-top:8px;
+    height:175px;
+    border-radius:16px;
+    background:radial-gradient(circle at 50% 40%, #163a24 0%, #0c1610 70%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero svg{max-height:92%;width:auto;}
+  .page-badge{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    background:rgba(0,0,0,0.55);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:20px;
+  }
+
+  .info{margin-top:10px;}
+  .product-name{
+    color:var(--text);
+    font-size:17px;
+    font-weight:800;
+    margin:0 0 3px;
+  }
+  .product-sub{
+    color:var(--muted);
+    font-size:12px;
+    margin:0 0 6px;
+  }
+  .rating-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:11.5px;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .rating-row .stars{color:#f2c14e;letter-spacing:1px;font-size:12px;}
+  .rating-row .score{color:var(--text);font-weight:700;}
+
+  .price-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .price-row .now{
+    color:var(--text);
+    font-size:19px;
+    font-weight:800;
+  }
+  .price-row .old{
+    color:var(--strike);
+    font-size:13px;
+    text-decoration:line-through;
+  }
+  .price-row .off{
+    background:rgba(62,207,91,0.15);
+    color:var(--green);
+    font-size:10.5px;
+    font-weight:800;
+    padding:3px 8px;
+    border-radius:6px;
+  }
+
+  .desc{
+    color:var(--muted);
+    font-size:11.5px;
+    line-height:1.45;
+    margin-bottom:10px;
+  }
+
+  .trust-row{
+    display:flex;
+    justify-content:space-between;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:8px 0;
+    margin-bottom:12px;
+  }
+  .trust-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    color:var(--muted);
+    font-size:9.5px;
+    text-align:center;
+    flex:1;
+  }
+
+  .action-row{
+    margin-top:auto;
+    display:flex;
+    gap:10px;
+    padding-bottom:6px;
+  }
+  .cart-icon-btn{
+    width:46px;height:46px;
+    border-radius:14px;
+    background:var(--field);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    flex-shrink:0;
+  }
+  .add-cart-btn{
+    flex:1;
+    background:transparent;
+    border:1.5px solid var(--green);
+    color:var(--green);
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .buy-now-btn{
+    flex:1;
+    background:var(--green);
+    border:none;
+    color:#08150c;
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:800;
+    cursor:pointer;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;icon-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+        <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+      </div>
+      <div class=&quot;header-right&quot;>
+        <div class=&quot;icon-btn&quot;>
+          <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 21s-7.5-4.6-10-9.1C.5 8 2.4 4.5 6 4a5 5 0 016 2 5 5 0 016-2c3.6.5 5.5 4 4 7.9C19.5 16.4 12 21 12 21z&quot;/></svg>
+        </div>
+        <div class=&quot;icon-btn&quot;>
+          <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;6&quot; cy=&quot;12&quot; r=&quot;2.5&quot;/><circle cx=&quot;18&quot; cy=&quot;6&quot; r=&quot;2.5&quot;/><circle cx=&quot;18&quot; cy=&quot;18&quot; r=&quot;2.5&quot;/><line x1=&quot;8.2&quot; y1=&quot;10.8&quot; x2=&quot;15.8&quot; y2=&quot;7.2&quot;/><line x1=&quot;8.2&quot; y1=&quot;13.2&quot; x2=&quot;15.8&quot; y2=&quot;16.8&quot;/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;hero&quot;>
+      <svg width=&quot;170&quot; height=&quot;185&quot; viewBox=&quot;0 0 170 185&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;>
+        <defs>
+          <linearGradient id=&quot;pbottle&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;1&quot; y2=&quot;1&quot;>
+            <stop offset=&quot;0%&quot; stop-color=&quot;#2f8a55&quot;/>
+            <stop offset=&quot;45%&quot; stop-color=&quot;#0f3a24&quot;/>
+            <stop offset=&quot;100%&quot; stop-color=&quot;#061c12&quot;/>
+          </linearGradient>
+          <linearGradient id=&quot;pcap&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+            <stop offset=&quot;0%&quot; stop-color=&quot;#1c4a30&quot;/>
+            <stop offset=&quot;100%&quot; stop-color=&quot;#0a2416&quot;/>
+          </linearGradient>
+          <radialGradient id=&quot;heroGlow&quot; cx=&quot;50%&quot; cy=&quot;45%&quot; r=&quot;55%&quot;>
+            <stop offset=&quot;0%&quot; stop-color=&quot;#2f8a55&quot; stop-opacity=&quot;0.35&quot;/>
+            <stop offset=&quot;100%&quot; stop-color=&quot;#2f8a55&quot; stop-opacity=&quot;0&quot;/>
+          </radialGradient>
+        </defs>
+
+        <circle cx=&quot;85&quot; cy=&quot;90&quot; r=&quot;80&quot; fill=&quot;url(#heroGlow)&quot;/>
+        <ellipse cx=&quot;85&quot; cy=&quot;172&quot; rx=&quot;60&quot; ry=&quot;8&quot; fill=&quot;#000&quot; opacity=&quot;0.4&quot;/>
+
+        <!-- twisted roots bottom-left -->
+        <g stroke=&quot;#b98a55&quot; stroke-width=&quot;8&quot; stroke-linecap=&quot;round&quot;>
+          <path d=&quot;M8 148c10-6 18-4 26-10&quot; fill=&quot;none&quot;/>
+          <path d=&quot;M6 162c14-4 24-2 34-10&quot; fill=&quot;none&quot;/>
+          <path d=&quot;M14 172c12-2 20 0 28-6&quot; fill=&quot;none&quot;/>
+        </g>
+        <g stroke=&quot;#8a6538&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; opacity=&quot;0.6&quot;>
+          <path d=&quot;M8 148c10-6 18-4 26-10&quot;/>
+          <path d=&quot;M6 162c14-4 24-2 34-10&quot;/>
+        </g>
+
+        <!-- leaves right, behind bottle -->
+        <path d=&quot;M120 118c16-2 28 8 32 22-14 4-28-2-34-14-2-4-1-7 2-8z&quot; fill=&quot;#3ecf5b&quot;/>
+        <path d=&quot;M110 130c12 0 20 8 22 18-10 2-20-2-24-12-1-3 0-5 2-6z&quot; fill=&quot;#4caf6d&quot; opacity=&quot;0.9&quot;/>
+
+        <!-- bottle body -->
+        <rect x=&quot;48&quot; y=&quot;38&quot; width=&quot;74&quot; height=&quot;118&quot; rx=&quot;12&quot; fill=&quot;url(#pbottle)&quot;/>
+
+        <!-- neck + cap -->
+        <rect x=&quot;63&quot; y=&quot;20&quot; width=&quot;44&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;url(#pcap)&quot;/>
+        <rect x=&quot;68&quot; y=&quot;6&quot; width=&quot;34&quot; height=&quot;16&quot; rx=&quot;3&quot; fill=&quot;#082014&quot;/>
+        <rect x=&quot;63&quot; y=&quot;38&quot; width=&quot;44&quot; height=&quot;5&quot; fill=&quot;#050f0a&quot; opacity=&quot;0.5&quot;/>
+
+        <!-- label -->
+        <rect x=&quot;55&quot; y=&quot;63&quot; width=&quot;60&quot; height=&quot;66&quot; rx=&quot;5&quot; fill=&quot;#f5f2e8&quot;/>
+        <rect x=&quot;55&quot; y=&quot;63&quot; width=&quot;60&quot; height=&quot;16&quot; rx=&quot;5&quot; fill=&quot;#c0392b&quot;/>
+        <rect x=&quot;61&quot; y=&quot;69&quot; width=&quot;30&quot; height=&quot;6&quot; rx=&quot;1.5&quot; fill=&quot;#f5f2e8&quot; opacity=&quot;0.9&quot;/>
+        <rect x=&quot;60&quot; y=&quot;85&quot; width=&quot;48&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#245c33&quot;/>
+        <rect x=&quot;60&quot; y=&quot;97&quot; width=&quot;40&quot; height=&quot;4.5&quot; rx=&quot;1&quot; fill=&quot;#9a9a8e&quot;/>
+        <rect x=&quot;60&quot; y=&quot;105&quot; width=&quot;34&quot; height=&quot;4.5&quot; rx=&quot;1&quot; fill=&quot;#9a9a8e&quot;/>
+        <rect x=&quot;60&quot; y=&quot;117&quot; width=&quot;30&quot; height=&quot;4&quot; rx=&quot;1&quot; fill=&quot;#b8b8ac&quot;/>
+      </svg>
+      <div class=&quot;page-badge&quot;>1/4</div>
+    </div>
+
+    <div class=&quot;info&quot;>
+      <h1 class=&quot;product-name&quot;>Ashwagandha Wellness Tablets</h1>
+      <p class=&quot;product-sub&quot;>60 Tablets</p>
+      <div class=&quot;rating-row&quot;>
+        <span class=&quot;score&quot;>4.6</span>
+        <span class=&quot;stars&quot;>&amp;#9733;&amp;#9733;&amp;#9733;&amp;#9733;&amp;#9733;</span>
+        <span>(1,245 reviews)</span>
+      </div>
+      <div class=&quot;price-row&quot;>
+        <span class=&quot;now&quot;>&amp;#8377;299</span>
+        <span class=&quot;old&quot;>&amp;#8377;375</span>
+        <span class=&quot;off&quot;>20% OFF</span>
+      </div>
+      <p class=&quot;desc&quot;>Helps reduce stress, improves stamina and supports overall well-being.</p>
+
+      <div class=&quot;trust-row&quot;>
+        <div class=&quot;trust-item&quot;>
+          <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z&quot;/></svg>
+          100% Original
+        </div>
+        <div class=&quot;trust-item&quot;>
+          <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><rect x=&quot;3&quot; y=&quot;8&quot; width=&quot;18&quot; height=&quot;12&quot; rx=&quot;2&quot;/><path d=&quot;M7 8V6a5 5 0 0110 0v2&quot;/></svg>
+          Secure Payment
+        </div>
+        <div class=&quot;trust-item&quot;>
+          <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M4 4v5h5&quot;/><path d=&quot;M20 20v-5h-5&quot;/><path d=&quot;M4.5 15a8 8 0 0013.9 3.3M19.5 9A8 8 0 005.6 5.7&quot;/></svg>
+          Easy Return
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;action-row&quot;>
+      <div class=&quot;cart-icon-btn&quot;>
+        <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;#fff&quot; stroke=&quot;none&quot;/><circle cx=&quot;18&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;#fff&quot; stroke=&quot;none&quot;/><path d=&quot;M2 3h2l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.6L21 8H6&quot;/></svg>
+      </div>
+      <button class=&quot;add-cart-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>Add to Cart</button>
+      <button class=&quot;buy-now-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('checkout')&quot;>Buy Now</button>
+    </div>
+
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-cart" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>My Cart</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#14181450;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:0 1 auto;
+    padding:6px 20px 0;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:8px;
+  }
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .back-btn{color:#fff;display:flex;align-items:center;}
+  .header h1{
+    font-size:17px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+  .edit-link{color:var(--green);font-size:13px;font-weight:700;text-decoration:none;}
+
+  .item-card{
+    display:flex;
+    gap:12px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px;
+    margin-top:14px;
+  }
+  .item-thumb{
+    width:56px;height:56px;
+    border-radius:10px;
+    flex-shrink:0;
+  }
+  .item-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+  .item-name{color:var(--text);font-size:12.5px;font-weight:700;margin:0;}
+  .item-sub{color:var(--muted);font-size:10.5px;margin:0;}
+  .item-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:center;
+    gap:8px;
+  }
+  .item-price{color:var(--text);font-size:13px;font-weight:800;}
+  .qty-stepper{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(62,207,91,0.1);
+    border:1px solid rgba(62,207,91,0.35);
+    border-radius:8px;
+    padding:3px 8px;
+  }
+  .qty-stepper button{
+    background:none;border:none;color:var(--green);font-size:13px;font-weight:800;cursor:pointer;
+    width:14px;
+  }
+  .qty-stepper span{color:var(--text);font-size:12px;font-weight:700;}
+
+  .promo-banner{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(62,207,91,0.08);
+    border:1px solid rgba(62,207,91,0.25);
+    border-radius:12px;
+    padding:10px 12px;
+    margin-top:14px;
+    color:#bfe9cc;
+    font-size:11.5px;
+    font-weight:600;
+  }
+
+  .coupon-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 2px;
+    border-bottom:1px solid var(--border);
+    margin-top:8px;
+    color:var(--text);
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .coupon-row .left{display:flex;align-items:center;gap:10px;}
+  .coupon-row svg{color:var(--green);}
+
+  .summary{
+    margin-top:14px;
+  }
+  .summary-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:9px;
+  }
+  .summary-row span:last-child{color:var(--text);font-weight:600;}
+  .summary-divider{
+    height:1px;
+    background:var(--border);
+    margin:6px 0 10px;
+  }
+  .total-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    font-weight:800;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+  .total-row span:last-child{color:var(--green);}
+
+  .bottom-bar{
+    padding:16px 20px 14px;
+    background:var(--bg);
+  }
+  .checkout-btn{
+    width:100%;
+    background:var(--green);
+    border:none;
+    color:#08150c;
+    border-radius:14px;
+    padding:15px;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;header-left&quot;>
+        <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+          <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+        </div>
+        <h1>My Cart (2)</h1>
+      </div>
+      <a href=&quot;#&quot; class=&quot;edit-link&quot;>Edit</a>
+    </div>
+
+    <div class=&quot;item-card&quot;>
+      <svg class=&quot;item-thumb&quot; viewBox=&quot;0 0 56 56&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;>
+        <rect width=&quot;56&quot; height=&quot;56&quot; rx=&quot;10&quot; fill=&quot;#0f2417&quot;/>
+        <rect x=&quot;20&quot; y=&quot;14&quot; width=&quot;16&quot; height=&quot;30&quot; rx=&quot;4&quot; fill=&quot;#1f5c38&quot;/>
+        <rect x=&quot;24&quot; y=&quot;8&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;2&quot; fill=&quot;#0a1f14&quot;/>
+        <rect x=&quot;18&quot; y=&quot;24&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot; fill=&quot;#f4f1e8&quot;/>
+      </svg>
+      <div class=&quot;item-info&quot;>
+        <p class=&quot;item-name&quot;>Himalaya Ashwagandha</p>
+        <p class=&quot;item-sub&quot;>60 Tablets</p>
+      </div>
+      <div class=&quot;item-right&quot;>
+        <span class=&quot;item-price&quot;>&amp;#8377;299</span>
+        <div class=&quot;qty-stepper&quot;>
+          <button>&amp;#8722;</button>
+          <span>1</span>
+          <button>&amp;#43;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;item-card&quot;>
+      <svg class=&quot;item-thumb&quot; viewBox=&quot;0 0 56 56&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;>
+        <rect width=&quot;56&quot; height=&quot;56&quot; rx=&quot;10&quot; fill=&quot;#0d1e2b&quot;/>
+        <rect x=&quot;14&quot; y=&quot;14&quot; width=&quot;12&quot; height=&quot;30&quot; rx=&quot;3&quot; fill=&quot;#2f8fd6&quot;/>
+        <rect x=&quot;30&quot; y=&quot;14&quot; width=&quot;12&quot; height=&quot;30&quot; rx=&quot;3&quot; fill=&quot;#e8f4fc&quot;/>
+      </svg>
+      <div class=&quot;item-info&quot;>
+        <p class=&quot;item-name&quot;>Accu-Chek</p>
+        <p class=&quot;item-sub&quot;>Active Strips (50s)</p>
+      </div>
+      <div class=&quot;item-right&quot;>
+        <span class=&quot;item-price&quot;>&amp;#8377;679</span>
+        <div class=&quot;qty-stepper&quot;>
+          <button>&amp;#8722;</button>
+          <span>1</span>
+          <button>&amp;#43;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;promo-banner&quot;>
+      <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#3ecf5b&quot; stroke-width=&quot;2&quot;><rect x=&quot;1&quot; y=&quot;7&quot; width=&quot;14&quot; height=&quot;9&quot; rx=&quot;1.5&quot;/><path d=&quot;M15 10h4l3 3v3h-7z&quot;/><circle cx=&quot;6&quot; cy=&quot;18&quot; r=&quot;1.8&quot;/><circle cx=&quot;17&quot; cy=&quot;18&quot; r=&quot;1.8&quot;/></svg>
+      Add &amp;#8377;22 more to get FREE delivery
+    </div>
+
+    <div class=&quot;coupon-row&quot;>
+      <div class=&quot;left&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M20 12l-8 8-9-9V4h7z&quot;/><circle cx=&quot;7.5&quot; cy=&quot;7.5&quot; r=&quot;1.2&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/></svg>
+        Apply Coupon
+      </div>
+      <svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg>
+    </div>
+
+    <div class=&quot;summary&quot;>
+      <div class=&quot;summary-row&quot;><span>Subtotal</span><span>&amp;#8377;978</span></div>
+      <div class=&quot;summary-row&quot; style=&quot;margin-bottom:0;&quot;><span>Delivery Charges</span><span>&amp;#8377;40</span></div>
+      <div class=&quot;summary-divider&quot;></div>
+      <div class=&quot;total-row&quot;><span>Total Amount</span><span>&amp;#8377;1,018</span></div>
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-bar&quot;>
+    <button class=&quot;checkout-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('checkout')&quot;>Proceed to Checkout</button>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-checkout" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Checkout</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --field:#14181450;
+    --card:#14181450;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 20px 0;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:8px;
+  }
+  .back-btn{color:#fff;display:flex;align-items:center;}
+  .header h1{
+    font-size:18px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+
+  .steps{
+    display:flex;
+    align-items:center;
+    margin-top:18px;
+    padding:0 4px;
+  }
+  .step{
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .step-num{
+    width:20px;height:20px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10.5px;
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .step.active .step-num{background:var(--green);color:#08150c;}
+  .step.inactive .step-num{background:var(--field);border:1px solid var(--border);color:var(--muted);}
+  .step-label{font-size:11.5px;font-weight:600;}
+  .step.active .step-label{color:var(--green);}
+  .step.inactive .step-label{color:var(--muted);}
+  .step-line{
+    flex:1;
+    height:1px;
+    background:var(--border);
+    margin:0 8px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    margin-top:16px;
+  }
+  .card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .card-head h3{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--text);
+    margin:0;
+  }
+  .card-head a{
+    color:var(--green);
+    font-size:12px;
+    font-weight:700;
+    text-decoration:none;
+  }
+  .addr-row{
+    display:flex;
+    gap:10px;
+  }
+  .addr-row svg{flex-shrink:0;margin-top:3px;color:var(--green);}
+  .addr-name{
+    color:var(--text);
+    font-size:13px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .addr-text{
+    color:var(--muted);
+    font-size:11.5px;
+    line-height:1.5;
+    margin:0;
+  }
+
+  .section-title{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--text);
+    margin:18px 0 10px;
+  }
+
+  .slot-option{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    cursor:pointer;
+  }
+  .slot-option.selected{
+    border-color:var(--green);
+    background:rgba(62,207,91,0.06);
+  }
+  .slot-text .day{
+    color:var(--text);
+    font-size:12.5px;
+    font-weight:700;
+    margin:0 0 3px;
+  }
+  .slot-text .time{
+    color:var(--muted);
+    font-size:11px;
+    margin:0;
+  }
+  .radio{
+    width:20px;height:20px;
+    border-radius:50%;
+    border:1.8px solid #454d47;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    box-sizing:border-box;
+  }
+  .radio.checked{
+    border-color:var(--green);
+    box-shadow:0 0 0 2px rgba(62,207,91,0.15);
+  }
+  .radio.checked::after{
+    content:&quot;&quot;;
+    width:10px;height:10px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 6px rgba(62,207,91,0.6);
+  }
+
+  .summary-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:9px;
+  }
+  .summary-row span:last-child{color:var(--text);font-weight:600;}
+  .summary-divider{
+    height:1px;
+    background:var(--border);
+    margin:8px 0 10px;
+  }
+  .total-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    font-weight:800;
+    color:var(--text);
+  }
+  .total-row span:last-child{color:var(--green);}
+
+  .bottom-bar{
+    padding:14px 20px 16px;
+    background:var(--bg);
+  }
+  .pay-btn{
+    width:100%;
+    background:var(--green);
+    border:none;
+    color:#08150c;
+    border-radius:16px;
+    padding:16px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    letter-spacing:.2px;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>
+        <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+      </div>
+      <h1>Checkout</h1>
+    </div>
+
+    <div class=&quot;steps&quot;>
+      <div class=&quot;step active&quot;>
+        <div class=&quot;step-num&quot;>1</div>
+        <div class=&quot;step-label&quot;>Address</div>
+      </div>
+      <div class=&quot;step-line&quot;></div>
+      <div class=&quot;step inactive&quot;>
+        <div class=&quot;step-num&quot;>2</div>
+        <div class=&quot;step-label&quot;>Delivery</div>
+      </div>
+      <div class=&quot;step-line&quot;></div>
+      <div class=&quot;step inactive&quot;>
+        <div class=&quot;step-num&quot;>3</div>
+        <div class=&quot;step-label&quot;>Payment</div>
+      </div>
+    </div>
+
+    <div class=&quot;card&quot;>
+      <div class=&quot;card-head&quot;>
+        <h3>Delivery Address</h3>
+        <a href=&quot;#&quot;>Change</a>
+      </div>
+      <div class=&quot;addr-row&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><path d=&quot;M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z&quot;/><circle cx=&quot;12&quot; cy=&quot;10&quot; r=&quot;2.5&quot;/></svg>
+        <div>
+          <p class=&quot;addr-name&quot;>Rajesh Puzhakkal</p>
+          <p class=&quot;addr-text&quot;>Aikkara Towers, Ullyakovil Rd, near Nairs Hospital, Asramam, Kollam, Kerala 691002</p>
+        </div>
+      </div>
+    </div>
+
+    <div class=&quot;section-title&quot;>Delivery Slot</div>
+
+    <div class=&quot;slot-option selected&quot;>
+      <div class=&quot;slot-text&quot;>
+        <p class=&quot;day&quot;>Tomorrow, 10 May</p>
+        <p class=&quot;time&quot;>9:00 AM - 1:00 PM</p>
+      </div>
+      <div class=&quot;radio checked&quot;></div>
+    </div>
+    <div class=&quot;slot-option&quot;>
+      <div class=&quot;slot-text&quot;>
+        <p class=&quot;day&quot;>Sunday, 11 May</p>
+        <p class=&quot;time&quot;>9:00 AM - 1:00 PM</p>
+      </div>
+      <div class=&quot;radio&quot;></div>
+    </div>
+
+    <div class=&quot;section-title&quot; style=&quot;margin-bottom:0;&quot;>Order Summary</div>
+    <div class=&quot;card&quot; style=&quot;margin-top:10px;&quot;>
+      <div class=&quot;summary-row&quot;><span>Items (2)</span><span>&amp;#8377;978</span></div>
+      <div class=&quot;summary-row&quot; style=&quot;margin-bottom:0;&quot;><span>Delivery Charges</span><span>&amp;#8377;40</span></div>
+      <div class=&quot;summary-divider&quot;></div>
+      <div class=&quot;total-row&quot;><span>Total Amount</span><span>&amp;#8377;1,018</span></div>
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-bar&quot;>
+    <button class=&quot;pay-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('payment')&quot;>Continue to Payment</button>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-payment" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Payment</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#14181450;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 20px 0;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:8px;
+  }
+  .back-btn{color:#fff;display:flex;align-items:center;}
+  .header h1{
+    font-size:18px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+
+  .steps{
+    display:flex;
+    align-items:center;
+    margin-top:18px;
+    padding:0 4px;
+  }
+  .step{
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .step-num{
+    width:20px;height:20px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10.5px;
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .step.active .step-num{background:var(--green);color:#08150c;}
+  .step.done .step-num{background:var(--green);color:#08150c;}
+  .step.inactive .step-num{background:var(--card);border:1px solid var(--border);color:var(--muted);}
+  .step-label{font-size:11.5px;font-weight:600;}
+  .step.active .step-label{color:var(--green);}
+  .step.done .step-label{color:var(--muted);}
+  .step.inactive .step-label{color:var(--muted);}
+  .step-line{
+    flex:1;
+    height:1px;
+    background:var(--border);
+    margin:0 8px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    margin-top:16px;
+  }
+  .card h3{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--text);
+    margin:0 0 12px;
+  }
+
+  .pay-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .pay-option:last-child{border-bottom:none;padding-bottom:2px;}
+  .pay-option:first-child{padding-top:2px;}
+  .radio{
+    width:20px;height:20px;
+    border-radius:50%;
+    border:1.8px solid #454d47;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    box-sizing:border-box;
+  }
+  .radio.checked{
+    border-color:var(--green);
+    box-shadow:0 0 0 2px rgba(62,207,91,0.15);
+  }
+  .radio.checked::after{
+    content:&quot;&quot;;
+    width:10px;height:10px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 6px rgba(62,207,91,0.6);
+  }
+  .pay-info{flex:1;}
+  .pay-info .name{
+    color:var(--text);
+    font-size:13px;
+    font-weight:700;
+    margin:0 0 2px;
+  }
+  .pay-info .sub{
+    color:var(--muted);
+    font-size:10.5px;
+    margin:0;
+  }
+  .pay-logo{
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  .total-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    margin-top:16px;
+  }
+  .total-card .label{color:var(--muted);font-size:12.5px;}
+  .total-card .amount{color:var(--text);font-size:18px;font-weight:800;}
+
+  .bottom-bar{
+    padding:14px 20px 10px;
+    background:var(--bg);
+  }
+  .place-btn{
+    width:100%;
+    background:var(--green);
+    border:none;
+    color:#08150c;
+    border-radius:16px;
+    padding:16px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .secure-note{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin-top:10px;
+    color:var(--muted);
+    font-size:10.5px;
+    padding-bottom:6px;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('checkout')&quot;>
+        <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+      </div>
+      <h1>Payment</h1>
+    </div>
+
+    <div class=&quot;steps&quot;>
+      <div class=&quot;step done&quot;>
+        <div class=&quot;step-num&quot;>&amp;#10003;</div>
+        <div class=&quot;step-label&quot;>Address</div>
+      </div>
+      <div class=&quot;step-line&quot;></div>
+      <div class=&quot;step done&quot;>
+        <div class=&quot;step-num&quot;>&amp;#10003;</div>
+        <div class=&quot;step-label&quot;>Delivery</div>
+      </div>
+      <div class=&quot;step-line&quot;></div>
+      <div class=&quot;step active&quot;>
+        <div class=&quot;step-num&quot;>3</div>
+        <div class=&quot;step-label&quot;>Payment</div>
+      </div>
+    </div>
+
+    <div class=&quot;card&quot;>
+      <h3>Payment Methods</h3>
+
+      <div class=&quot;pay-option&quot;>
+        <div class=&quot;radio checked&quot;></div>
+        <div class=&quot;pay-info&quot;>
+          <p class=&quot;name&quot;>UPI</p>
+          <p class=&quot;sub&quot;>Pay using any UPI app</p>
+        </div>
+        <div class=&quot;pay-logo&quot;>
+          <svg width=&quot;34&quot; height=&quot;16&quot; viewBox=&quot;0 0 34 16&quot;><text x=&quot;0&quot; y=&quot;12&quot; font-family=&quot;Poppins&quot; font-size=&quot;12&quot; font-weight=&quot;800&quot; fill=&quot;#f2994a&quot;>UPI</text></svg>
+        </div>
+      </div>
+
+      <div class=&quot;pay-option&quot;>
+        <div class=&quot;radio&quot;></div>
+        <div class=&quot;pay-info&quot;>
+          <p class=&quot;name&quot;>Credit / Debit Card</p>
+          <p class=&quot;sub&quot;>Visa, Mastercard, Rupay</p>
+        </div>
+        <div class=&quot;pay-logo&quot;>
+          <svg width=&quot;22&quot; height=&quot;16&quot; viewBox=&quot;0 0 22 16&quot;><circle cx=&quot;7&quot; cy=&quot;8&quot; r=&quot;6&quot; fill=&quot;#eb001b&quot; opacity=&quot;0.9&quot;/><circle cx=&quot;14&quot; cy=&quot;8&quot; r=&quot;6&quot; fill=&quot;#f79e1b&quot; opacity=&quot;0.8&quot;/></svg>
+          <svg width=&quot;26&quot; height=&quot;14&quot; viewBox=&quot;0 0 26 14&quot;><text x=&quot;0&quot; y=&quot;11&quot; font-family=&quot;Poppins&quot; font-size=&quot;11&quot; font-weight=&quot;800&quot; font-style=&quot;italic&quot; fill=&quot;#2a5ada&quot;>VISA</text></svg>
+        </div>
+      </div>
+
+      <div class=&quot;pay-option&quot;>
+        <div class=&quot;radio&quot;></div>
+        <div class=&quot;pay-info&quot;>
+          <p class=&quot;name&quot;>Wallets</p>
+          <p class=&quot;sub&quot;>Pay using wallet balance</p>
+        </div>
+        <div class=&quot;pay-logo&quot;>
+          <svg width=&quot;20&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 18&quot;><rect x=&quot;1&quot; y=&quot;4&quot; width=&quot;18&quot; height=&quot;12&quot; rx=&quot;3&quot; fill=&quot;#2f8fd6&quot;/><circle cx=&quot;15&quot; cy=&quot;10&quot; r=&quot;2&quot; fill=&quot;#fff&quot;/></svg>
+        </div>
+      </div>
+
+      <div class=&quot;pay-option&quot;>
+        <div class=&quot;radio&quot;></div>
+        <div class=&quot;pay-info&quot;>
+          <p class=&quot;name&quot;>Cash on Delivery</p>
+          <p class=&quot;sub&quot;>Pay when you receive</p>
+        </div>
+        <div class=&quot;pay-logo&quot;>
+          <svg width=&quot;22&quot; height=&quot;16&quot; viewBox=&quot;0 0 22 16&quot;><rect x=&quot;1&quot; y=&quot;2&quot; width=&quot;20&quot; height=&quot;12&quot; rx=&quot;2&quot; fill=&quot;#3ecf5b&quot;/><circle cx=&quot;11&quot; cy=&quot;8&quot; r=&quot;3.2&quot; fill=&quot;#0c2a17&quot;/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <div class=&quot;total-card&quot;>
+      <span class=&quot;label&quot;>Total Amount</span>
+      <span class=&quot;amount&quot;>&amp;#8377;1,018</span>
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-bar&quot;>
+    <button class=&quot;place-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+      <svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#08150c&quot; stroke-width=&quot;2.2&quot;><rect x=&quot;4&quot; y=&quot;11&quot; width=&quot;16&quot; height=&quot;9&quot; rx=&quot;2&quot;/><path d=&quot;M8 11V7a4 4 0 018 0v4&quot;/></svg>
+      Place Order
+    </button>
+    <div class=&quot;secure-note&quot;>
+      <svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#3ecf5b&quot;><path d=&quot;M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z&quot;/></svg>
+      Your payment is 100% secure
+    </div>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-profile" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>My Profile</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --card:#14181450;
+    --border:#282c28;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+    --red:#e5384d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 20px 0;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    margin-top:10px;
+  }
+  .header h1{
+    font-size:16px;
+    font-weight:700;
+    color:var(--text);
+    margin:0;
+  }
+  .settings-btn{
+    position:absolute;
+    right:0;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+  }
+
+  .profile-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:22px;
+  }
+  .avatar{
+    width:58px;height:58px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:linear-gradient(135deg,#3ecf5b,#1c7a3a);
+    display:flex;align-items:center;justify-content:center;
+    color:#08150c;
+    font-size:20px;
+    font-weight:800;
+    border:2px solid #2a332c;
+  }
+  .profile-name{
+    color:var(--text);
+    font-size:16px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .profile-phone{
+    color:var(--muted);
+    font-size:12px;
+    margin:0;
+  }
+
+  .rewards-card{
+    margin-top:20px;
+    background:linear-gradient(120deg,#123a22,#0a1e12);
+    border:1px solid #1c4a2c;
+    border-radius:14px;
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .rewards-card .r-name{
+    color:#bfe9cc;
+    font-size:12.5px;
+    font-weight:700;
+    margin:0 0 3px;
+  }
+  .rewards-card .r-points{
+    color:var(--text);
+    font-size:15px;
+    font-weight:800;
+    margin:0;
+  }
+
+  .menu{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    padding-bottom:14px;
+  }
+  .menu-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:13px 14px;
+  }
+  .menu-item .icon{
+    width:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text);
+    flex-shrink:0;
+  }
+  .menu-item .label{
+    flex:1;
+    color:var(--text);
+    font-size:13px;
+    font-weight:600;
+  }
+  .menu-item .chevron{color:var(--muted);flex-shrink:0;}
+  .menu-item.logout .icon,
+  .menu-item.logout .label{color:var(--red);}
+
+  .bottom-nav{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 22px 10px;
+    border-top:1px solid var(--border);
+    background:var(--bg);
+  }
+  .nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    color:var(--muted);
+    position:relative;
+  }
+  .nav-item.active{color:var(--green);}
+  .nav-item span{font-size:9.5px;font-weight:600;}
+  .nav-badge{
+    position:absolute;
+    top:-4px;right:6px;
+    background:var(--green);
+    color:#08150c;
+    font-size:8px;
+    font-weight:800;
+    width:14px;height:14px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg);
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <h1>My Profile</h1>
+      <div class=&quot;settings-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('settings')&quot;>
+        <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3&quot;/><path d=&quot;M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1.08-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;profile-row&quot;>
+      <div class=&quot;avatar&quot;>RP</div>
+      <div>
+        <p class=&quot;profile-name&quot;>Rajesh Puzhakkal</p>
+        <p class=&quot;profile-phone&quot;>+91 96338 86333</p>
+      </div>
+    </div>
+
+    <div class=&quot;rewards-card&quot;>
+      <div>
+        <p class=&quot;r-name&quot;>Ampere Rewards</p>
+        <p class=&quot;r-points&quot;>120 Points</p>
+      </div>
+      <svg width=&quot;30&quot; height=&quot;30&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M8 4h8v4a4 4 0 01-8 0V4z&quot; fill=&quot;#f2c14e&quot;/><path d=&quot;M6 5H4a2 2 0 002 4M18 5h2a2 2 0 01-2 4&quot; stroke=&quot;#f2c14e&quot; stroke-width=&quot;1.5&quot; fill=&quot;none&quot;/><rect x=&quot;10&quot; y=&quot;15&quot; width=&quot;4&quot; height=&quot;4&quot; fill=&quot;#e0a83e&quot;/><rect x=&quot;7&quot; y=&quot;19&quot; width=&quot;10&quot; height=&quot;2.5&quot; rx=&quot;1&quot; fill=&quot;#f2c14e&quot;/></svg>
+    </div>
+
+    <div class=&quot;menu&quot;>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><rect x=&quot;3&quot; y=&quot;7&quot; width=&quot;18&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2&quot;/></svg></div>
+        <div class=&quot;label&quot;>My Orders</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 21s-7.5-4.6-10-9.1C.5 8 2.4 4.5 6 4a5 5 0 016 2 5 5 0 016-2c3.6.5 5.5 4 4 7.9C19.5 16.4 12 21 12 21z&quot;/></svg></div>
+        <div class=&quot;label&quot;>My Wishlist</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z&quot;/><circle cx=&quot;12&quot; cy=&quot;10&quot; r=&quot;2.5&quot;/></svg></div>
+        <div class=&quot;label&quot;>Addresses</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 2l2.2 4.7 5.1.7-3.7 3.6.9 5.1L12 13.7l-4.5 2.4.9-5.1-3.7-3.6 5.1-.7z&quot;/></svg></div>
+        <div class=&quot;label&quot;>Rewards</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9z&quot;/><path d=&quot;M13.7 21a2 2 0 01-3.4 0&quot;/></svg></div>
+        <div class=&quot;label&quot;>Notifications</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/><path d=&quot;M9.5 9a2.5 2.5 0 015 .5c0 1.5-2 1.5-2 3.5&quot;/><circle cx=&quot;12&quot; cy=&quot;16.5&quot; r=&quot;0.6&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/></svg></div>
+        <div class=&quot;label&quot;>Help &amp;amp; Support</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+      <div class=&quot;menu-item logout&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('signin')&quot;>
+        <div class=&quot;icon&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4&quot;/><path d=&quot;M16 17l5-5-5-5&quot;/><path d=&quot;M21 12H9&quot;/></svg></div>
+        <div class=&quot;label&quot;>Logout</div>
+        <div class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class=&quot;bottom-nav&quot;>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('home')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 2L2 10h3v10h6v-6h2v6h6V10h3z&quot;/></svg>
+      <span>Home</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('categories')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;3&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;3&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/><rect x=&quot;13&quot; y=&quot;13&quot; width=&quot;8&quot; height=&quot;8&quot; rx=&quot;1.5&quot;/></svg>
+      <span>Categories</span>
+    </div>
+    <div class=&quot;nav-item&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><path d=&quot;M12 21s-7.5-4.6-10-9.1C.5 8 2.4 4.5 6 4a5 5 0 016 2 5 5 0 016-2c3.6.5 5.5 4 4 7.9C19.5 16.4 12 21 12 21z&quot;/></svg>
+      <span>Wishlist</span>
+    </div>
+    <div class=&quot;nav-item&quot; style=&quot;position:relative;cursor:pointer&quot; onclick=&quot;parent.showScreen('cart')&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot;><circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><circle cx=&quot;18&quot; cy=&quot;21&quot; r=&quot;1.4&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/><path d=&quot;M2 3h2l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.6L21 8H6&quot;/></svg>
+      <span class=&quot;nav-badge&quot;>2</span>
+      <span>Cart</span>
+    </div>
+    <div class=&quot;nav-item active&quot;>
+      <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;><circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/><path d=&quot;M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8z&quot;/></svg>
+      <span>Profile</span>
+    </div>
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+    <iframe id="frame-settings" class="scr" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<title>Settings</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --bg:#090b09;
+    --border:#22261f;
+    --green:#3ecf5b;
+    --text:#ffffff;
+    --muted:#8c928d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:&quot;Poppins&quot;,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+    background:#1c1c1e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+  .phone{
+    width:360px;
+    height:740px;
+    background:var(--bg);
+    border-radius:44px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), 0 0 0 10px #000;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px 4px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:6px;}
+  .statusbar svg{display:block;}
+
+  .content{
+    flex:1;
+    padding:6px 22px 0;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    display:flex;
+    flex-direction:column;
+  }
+  .content::-webkit-scrollbar{display:none;width:0;height:0;}
+
+  .header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:8px;
+  }
+  .back-btn{color:#fff;display:flex;align-items:center;}
+  .header h1{
+    font-size:19px;
+    font-weight:800;
+    color:var(--text);
+    margin:0;
+  }
+
+  .list{
+    margin-top:20px;
+  }
+  .row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 2px;
+    border-bottom:1px solid var(--border);
+  }
+  .row .label{
+    color:var(--text);
+    font-size:13.5px;
+    font-weight:500;
+  }
+  .row .right{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+  .row .chevron{color:var(--muted);display:flex;align-items:center;}
+
+  .toggle{
+    width:42px;height:24px;
+    border-radius:999px;
+    background:#2a302b;
+    position:relative;
+    flex-shrink:0;
+  }
+  .toggle.on{background:var(--green);}
+  .toggle::after{
+    content:&quot;&quot;;
+    position:absolute;
+    top:3px;left:3px;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+  }
+  .toggle.on::after{left:21px;}
+
+  .footer{
+    margin-top:auto;
+    text-align:center;
+    color:#4d534e;
+    font-size:11px;
+    padding:20px 0;
+  }
+
+  .home-indicator{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:130px;
+    height:5px;
+    background:#fff;
+    border-radius:3px;
+    opacity:.9;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;phone&quot;>
+
+  <div class=&quot;statusbar&quot;>
+    <span>9:41</span>
+    <div class=&quot;icons&quot;>
+      <svg width=&quot;18&quot; height=&quot;12&quot; viewBox=&quot;0 0 18 12&quot; fill=&quot;#fff&quot;><rect x=&quot;0&quot; y=&quot;7&quot; width=&quot;3&quot; height=&quot;5&quot; rx=&quot;0.5&quot;/><rect x=&quot;5&quot; y=&quot;5&quot; width=&quot;3&quot; height=&quot;7&quot; rx=&quot;0.5&quot;/><rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;0.5&quot;/><rect x=&quot;15&quot; y=&quot;0&quot; width=&quot;3&quot; height=&quot;12&quot; rx=&quot;0.5&quot;/></svg>
+      <svg width=&quot;16&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 12&quot; fill=&quot;#fff&quot;><path d=&quot;M8 10.5a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM4.7 7.6a4.6 4.6 0 016.6 0l-1.3 1.4a2.7 2.7 0 00-4 0zM2 5a8.3 8.3 0 0112 0L12.7 6.4a6.4 6.4 0 00-9.4 0z&quot;/></svg>
+      <svg width=&quot;24&quot; height=&quot;12&quot; viewBox=&quot;0 0 24 12&quot;><rect x=&quot;0.5&quot; y=&quot;0.5&quot; width=&quot;21&quot; height=&quot;11&quot; rx=&quot;2.5&quot; stroke=&quot;#fff&quot; fill=&quot;none&quot;/><rect x=&quot;2&quot; y=&quot;2&quot; width=&quot;17&quot; height=&quot;8&quot; rx=&quot;1.5&quot; fill=&quot;#fff&quot;/><rect x=&quot;22.5&quot; y=&quot;4&quot; width=&quot;1.5&quot; height=&quot;4&quot; rx=&quot;0.7&quot; fill=&quot;#fff&quot;/></svg>
+    </div>
+  </div>
+
+  <div class=&quot;content&quot;>
+
+    <div class=&quot;header&quot;>
+      <div class=&quot;back-btn&quot; style=&quot;cursor:pointer&quot; onclick=&quot;parent.showScreen('profile')&quot;>
+        <svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M15 5l-7 7 7 7&quot;/></svg>
+      </div>
+      <h1>Settings</h1>
+    </div>
+
+    <div class=&quot;list&quot;>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Dark Mode</span>
+        <div class=&quot;toggle on&quot;></div>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Language</span>
+        <span class=&quot;right&quot;>English
+          <svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg>
+        </span>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Notifications</span>
+        <span class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></span>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Biometric Login</span>
+        <div class=&quot;toggle on&quot;></div>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Privacy Policy</span>
+        <span class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></span>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Terms &amp;amp; Conditions</span>
+        <span class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></span>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>About Ampere</span>
+        <span class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></span>
+      </div>
+
+      <div class=&quot;row&quot;>
+        <span class=&quot;label&quot;>Help &amp;amp; Support</span>
+        <span class=&quot;chevron&quot;><svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot;><path d=&quot;M9 6l6 6-6 6&quot;/></svg></span>
+      </div>
+
+    </div>
+
+    <div class=&quot;footer&quot;>App Version 1.0.0</div>
+
+  </div>
+
+  <div class=&quot;home-indicator&quot;></div>
+</div>
+
+</body>
+</html>
+"></iframe>
+  </div>
+
+<script>
+function showScreen(name){
+  document.querySelectorAll('iframe.scr').forEach(f => f.classList.remove('active'));
+  var target = document.getElementById('frame-' + name);
+  if(target){ target.classList.add('active'); }
+}
+window.showScreen = showScreen;
+</script>
+</body>
+</html>
