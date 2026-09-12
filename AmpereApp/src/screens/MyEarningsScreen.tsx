@@ -8,7 +8,7 @@ import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
-import { useMyWallet, useMyWalletTransactions, useRanks } from '../api/hooks';
+import { useMyRankProgress, useMyWallet, useMyWalletTransactions, useRanks } from '../api/hooks';
 import { useAuth } from '../context/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'MyEarnings'>;
@@ -27,13 +27,32 @@ export default function MyEarningsScreen({ navigation }: Props) {
   const { data: balance, isLoading: loadingBalance } = useMyWallet();
   const { data: transactions = [], isLoading: loadingTx } = useMyWalletTransactions();
   const { data: ranks = [] } = useRanks();
+  const { data: rankProgress } = useMyRankProgress();
 
-  const teamPV = user?.cumulativeTeamPV ?? 0;
+  const cumulativeTeamPV = user?.cumulativeTeamPV ?? 0;
   const sortedRanks = [...ranks].sort((a, b) => a.sortOrder - b.sortOrder);
   const nextRank = sortedRanks.find((r) => r.sortOrder > (user?.currentRankSortOrder ?? 0));
-  const progress = nextRank
-    ? Math.min(1, teamPV / Math.max(nextRank.criteria.minCumulativeTeamPV, 1))
-    : 1;
+
+  // gpv_threshold ranks (Seeder..Star Performer) progress on lifetime cumulativeTeamPV;
+  // count_based ranks (Bronze Star..Double UCA) progress on how many qualifying members
+  // are anywhere in the downline - these use different units, so they need different copy.
+  let progress = 1;
+  let progressLabel = '';
+  if (nextRank) {
+    if (nextRank.ruleType === 'count_based') {
+      const required = nextRank.countCriteria.requiredCount || 1;
+      const requiredName = nextRank.countCriteria.requiredRankName ?? '';
+      const have = rankProgress?.countsByRankName[requiredName] ?? 0;
+      progress = Math.min(1, have / required);
+      progressLabel = `${have} / ${required} ${requiredName}${required === 1 ? '' : 's'} toward ${nextRank.name}`;
+    } else {
+      const required = Math.max(nextRank.criteria.minCumulativeTeamPV, 1);
+      progress = Math.min(1, cumulativeTeamPV / required);
+      progressLabel = `${cumulativeTeamPV} / ${nextRank.criteria.minCumulativeTeamPV} team PV toward ${nextRank.name}`;
+    }
+  }
+
+  const pgpv = (rankProgress?.personalPV ?? 0) + (rankProgress?.teamPV ?? 0);
 
   return (
     <SafeAreaView style={styles.phone} edges={['top', 'bottom']}>
@@ -71,11 +90,13 @@ export default function MyEarningsScreen({ navigation }: Props) {
               <View style={styles.progressTrack}>
                 <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
               </View>
-              <Text style={styles.progressText}>
-                {teamPV} / {nextRank.criteria.minCumulativeTeamPV} team PV toward {nextRank.name}
-              </Text>
+              <Text style={styles.progressText}>{progressLabel}</Text>
             </>
           )}
+          <View style={styles.pgpvRow}>
+            <Text style={styles.pgpvLabel}>This month's PGPV</Text>
+            <Text style={styles.pgpvValue}>{pgpv}</Text>
+          </View>
         </View>
 
         <Text style={styles.sectionTitle}>Transaction History</Text>
@@ -153,6 +174,17 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     marginTop: 6,
   },
+  pgpvRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 12,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  pgpvLabel: { color: colors.muted, fontSize: 12, fontFamily: fonts.regular },
+  pgpvValue: { color: colors.text, fontSize: 13, fontFamily: fonts.bold },
   sectionTitle: { color: colors.text, fontSize: 14.5, fontFamily: fonts.bold, marginTop: 22, marginBottom: 10 },
   emptyText: { color: colors.muted, fontSize: 12.5, fontFamily: fonts.regular },
   txCard: {

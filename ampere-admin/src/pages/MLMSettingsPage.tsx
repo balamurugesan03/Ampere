@@ -10,7 +10,7 @@ export default function MLMSettingsPage() {
   const updateSettings = useUpdateMLMSettings();
 
   const [pvToInrRate, setPvToInrRate] = useState('1');
-  const [selfPurchasePercent, setSelfPurchasePercent] = useState('20');
+  const [selfPurchasePercent, setSelfPurchasePercent] = useState('10');
   const [teamLevelPercents, setTeamLevelPercents] = useState<string[]>(Array(10).fill('0'));
   const [pgpvThreshold, setPgpvThreshold] = useState('0');
   const [pgpvScope, setPgpvScope] = useState('self');
@@ -59,7 +59,7 @@ export default function MLMSettingsPage() {
         title="MLM Settings"
         icon={SlidersHorizontal}
         description={
-          'These values control every commission calculation across the app: how much ₹1 PV is worth, what percentage of a purchase\'s PV goes to the buyer (Self Purchase Income), and how the remaining Team Development Income splits across the 10 upline levels. PGPV is the minimum monthly personal PV a distributor needs to remain "active" and keep receiving Team Development Income.'
+          'These values control every commission calculation across the app: how much ₹1 PV is worth, the Self Purchase Bonus percentage credited to the buyer, and how the Development Bonus splits across the 10 upline levels. PGPV Scope "Self + Full Team" uses compressed group PV (a downline member\'s own subtree stops counting toward you once they themselves reach Star Performer) - this is the scope the new rank chart\'s monthly maintenance relies on.'
         }
       />
 
@@ -74,7 +74,7 @@ export default function MLMSettingsPage() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">
-                Self Purchase Income %
+                Self Purchase Bonus %
               </label>
               <Input
                 type="number"
@@ -86,7 +86,7 @@ export default function MLMSettingsPage() {
 
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-2">
-              Team Development Income % by level (sums to {levelSum}%)
+              Development Bonus % by level (sums to {levelSum}%)
             </label>
             <div className="grid grid-cols-5 gap-2">
               {teamLevelPercents.map((val, i) => (
@@ -127,7 +127,7 @@ export default function MLMSettingsPage() {
 
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-2">
-              Company-Wide Bonus Pools (% of total company monthly PV, cumulative rank unlock)
+              Company-PV Funds (12 incomes, % of total company monthly PV, unlocked at a minimum rank)
             </label>
             <div className="space-y-2">
               {bonusPools.map((pool, i) => (

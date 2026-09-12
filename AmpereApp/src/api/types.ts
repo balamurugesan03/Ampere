@@ -117,10 +117,14 @@ export interface RankDefinition {
   _id: string;
   name: string;
   sortOrder: number;
+  ruleType: 'gpv_threshold' | 'count_based';
   criteria: {
     minCumulativeTeamPV: number;
-    minDirectReferrals: number;
-    minTeamSize: number;
+    minMonthlyPGPV: number;
+  };
+  countCriteria: {
+    requiredRankName: string | null;
+    requiredCount: number;
   };
   active: boolean;
 }

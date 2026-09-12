@@ -4,6 +4,7 @@ const MLMSettings = require('../models/MLMSettings');
 const MonthlyPayoutRun = require('../models/MonthlyPayoutRun');
 const CommissionTransaction = require('../models/CommissionTransaction');
 const { isPgpvQualified, creditLedgerEntry } = require('./commissionService');
+const { recomputeRankForChain } = require('./rankService');
 
 function periodDateRange(period) {
   const [year, month] = period.split('-').map(Number);
@@ -36,6 +37,13 @@ async function runMonthlyPayout(period, adminId) {
   const settings = await MLMSettings.getSingleton();
   const totalCompanyPV = await computeTotalCompanyPV(period);
 
+  // This is the moment real money leaves the company pools - force a fresh, full rank
+  // recompute (GPV threshold + count-based tiers, and fresh compressed PGPV) for every
+  // customer first, rather than relying on the cheap/lazy recompute paths used on ordinary
+  // orders, so pool eligibility below is correct even if something lagged during the month.
+  const allCustomerIds = (await User.find({ role: 'customer' }).select('_id')).map((u) => u._id);
+  await recomputeRankForChain(allCustomerIds, { period, force: true });
+
   const runDoc = await MonthlyPayoutRun.create({
     period,
     totalCompanyPV,
@@ -55,7 +63,7 @@ async function runMonthlyPayout(period, adminId) {
 
     const qualifying = [];
     for (const candidate of candidates) {
-      if (await isPgpvQualified(candidate._id, period, settings)) qualifying.push(candidate._id);
+      if (await isPgpvQualified(candidate._id, period, settings, { force: true })) qualifying.push(candidate._id);
     }
 
     const perUserAmount = qualifying.length > 0 ? poolAmountInr / qualifying.length : 0;

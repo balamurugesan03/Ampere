@@ -204,3 +204,17 @@ export function useRanks() {
     queryFn: async () => (await api.get<{ ranks: RankDefinition[] }>('/mlm/ranks')).data.ranks,
   });
 }
+
+export interface RankProgress {
+  period: string;
+  personalPV: number;
+  teamPV: number; // compressed group PV, current period
+  countsByRankName: Record<string, number>; // e.g. { 'Star Performer': 2, Diamond: 0 }
+}
+
+export function useMyRankProgress() {
+  return useQuery({
+    queryKey: ['my-rank-progress'],
+    queryFn: async () => (await api.get<RankProgress>('/network/my-rank-progress')).data,
+  });
+}

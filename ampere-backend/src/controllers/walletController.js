@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const CommissionTransaction = require('../models/CommissionTransaction');
-const { getWalletSummary } = require('../services/walletService');
+const { getWalletSummary, recordManualCredit } = require('../services/walletService');
 
 async function myWallet(req, res) {
   const user = await getWalletSummary(req.user._id);
@@ -23,4 +23,14 @@ async function userTransactions(req, res) {
   res.json({ transactions });
 }
 
-module.exports = { myWallet, myTransactions, userWallet, userTransactions };
+async function creditWallet(req, res) {
+  try {
+    const { amount, reason } = req.body;
+    const result = await recordManualCredit(req.params.userId, { amount, reason }, req.user._id);
+    res.status(201).json(result);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+}
+
+module.exports = { myWallet, myTransactions, userWallet, userTransactions, creditWallet };

@@ -106,7 +106,7 @@ export interface DashboardStats {
 
 // MLM
 export interface BonusPool {
-  key: 'performance' | 'goldCoin' | 'travel' | 'car' | 'house' | 'profitShare';
+  key: string; // free-form, admin-editable - one of the 12 Company-PV-based income keys
   label: string;
   percentOfCompanyPV: number;
   minRankSortOrder: number;
@@ -125,10 +125,18 @@ export interface RankDefinition {
   _id: string;
   name: string;
   sortOrder: number;
+  ruleType: 'gpv_threshold' | 'count_based';
+  // gpv_threshold ranks: matched against cumulativeTeamPV (lifetime) and, optionally,
+  // the current month's compressed PGPV (Star Performer only).
   criteria: {
     minCumulativeTeamPV: number;
-    minDirectReferrals: number;
-    minTeamSize: number;
+    minMonthlyPGPV: number;
+  };
+  // count_based ranks: matched by counting downline members ranked at or above
+  // `requiredRankName`, anywhere in the downline.
+  countCriteria: {
+    requiredRankName: string | null;
+    requiredCount: number;
   };
   active: boolean;
 }
@@ -158,11 +166,25 @@ export interface MonthlyPayoutRun {
 export interface WalletTransaction {
   _id: string;
   user: string;
-  type: 'self_purchase' | 'team_level' | 'payout_debit' | 'manual_adjustment';
+  type: 'self_purchase' | 'team_level' | 'bonus_pool' | 'payout_debit' | 'manual_adjustment' | 'reversal';
   amount: number;
+  sourceType?: 'order' | 'manual_grant';
   sourceOrder?: string;
+  sourceManualGrant?: string;
   level?: number;
   note?: string;
+  createdAt: string;
+}
+
+export interface ManualPVGrant {
+  _id: string;
+  user: string;
+  pv: number;
+  reason: string;
+  status: 'active' | 'revoked';
+  createdBy?: { _id: string; name: string };
+  revokedAt?: string;
+  revokedBy?: { _id: string; name: string };
   createdAt: string;
 }
 

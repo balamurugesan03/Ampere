@@ -2,7 +2,8 @@ const express = require('express');
 const { getDashboardStats, listUsers, updateUser, uploadFile } = require('../controllers/adminController');
 const { listAllOrders, updateOrderStatus } = require('../controllers/orderController');
 const { userDownline } = require('../controllers/networkController');
-const { userWallet, userTransactions } = require('../controllers/walletController');
+const { userWallet, userTransactions, creditWallet } = require('../controllers/walletController');
+const { createGrant, listGrants, revokeGrant } = require('../controllers/manualGrantController');
 const {
   listWalletBalances,
   payUser,
@@ -36,6 +37,11 @@ router.post('/upload', upload.single('file'), uploadFile);
 router.get('/network/:userId/downline', userDownline);
 router.get('/wallet/:userId', userWallet);
 router.get('/wallet/:userId/transactions', userTransactions);
+router.post('/wallet/:userId/credit', creditWallet);
+
+router.post('/pv-grants', createGrant);
+router.get('/pv-grants/:userId', listGrants);
+router.post('/pv-grants/:id/revoke', revokeGrant);
 router.get('/payouts/wallets', listWalletBalances);
 router.post('/payouts/:userId/pay', payUser);
 router.get('/payouts/history', payoutHistory);

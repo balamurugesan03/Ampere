@@ -7,6 +7,7 @@ import type {
   Coupon,
   DashboardStats,
   DownlineUser,
+  ManualPVGrant,
   MLMSettings,
   MonthlyPayoutRun,
   Order,
@@ -342,6 +343,57 @@ export function useVoidPayoutRun() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['monthly-payout-runs'] });
       qc.invalidateQueries({ queryKey: ['wallet-balances'] });
+    },
+  });
+}
+
+// Manual PV grants
+export function useUserGrants(userId?: string) {
+  return useQuery({
+    queryKey: ['pv-grants', userId],
+    queryFn: async () => (await api.get<{ grants: ManualPVGrant[] }>(`/admin/pv-grants/${userId}`)).data.grants,
+    enabled: !!userId,
+  });
+}
+
+export function useGrantPV() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, pv, reason }: { userId: string; pv: number; reason: string }) =>
+      (await api.post<{ grant: ManualPVGrant }>('/admin/pv-grants', { userId, pv, reason })).data.grant,
+    onSuccess: (_data, vars) => {
+      qc.invalidateQueries({ queryKey: ['pv-grants', vars.userId] });
+      qc.invalidateQueries({ queryKey: ['admin-users'] });
+      qc.invalidateQueries({ queryKey: ['wallet-balances'] });
+      qc.invalidateQueries({ queryKey: ['wallet-transactions', vars.userId] });
+    },
+  });
+}
+
+export function useRevokeGrant() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ grantId }: { grantId: string; userId: string }) =>
+      (await api.post<{ grant: ManualPVGrant }>(`/admin/pv-grants/${grantId}/revoke`)).data.grant,
+    onSuccess: (_data, vars) => {
+      qc.invalidateQueries({ queryKey: ['pv-grants', vars.userId] });
+      qc.invalidateQueries({ queryKey: ['admin-users'] });
+      qc.invalidateQueries({ queryKey: ['wallet-balances'] });
+      qc.invalidateQueries({ queryKey: ['wallet-transactions', vars.userId] });
+    },
+  });
+}
+
+// Manual wallet credit (admin adds funds directly, distinct from the pay-out debit flow)
+export function useCreditWallet() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, amount, reason }: { userId: string; amount: number; reason: string }) =>
+      (await api.post<{ walletBalance: number }>(`/admin/wallet/${userId}/credit`, { amount, reason })).data,
+    onSuccess: (_data, vars) => {
+      qc.invalidateQueries({ queryKey: ['admin-users'] });
+      qc.invalidateQueries({ queryKey: ['wallet-balances'] });
+      qc.invalidateQueries({ queryKey: ['wallet-transactions', vars.userId] });
     },
   });
 }

@@ -1,4 +1,33 @@
 const User = require('../models/User');
+const RankDefinition = require('../models/RankDefinition');
+const { getCompressedPGPV } = require('../services/pgpvService');
+const { periodOf } = require('../utils/period');
+
+// Feeds the "next rank" progress display: compressed PGPV for the current period, plus,
+// for every rank name any count_based RankDefinition references (Star Performer, Diamond,
+// Universal Crown Ambassador in the default chart), how many downline members the caller
+// currently has at that rank or higher, anywhere in their downline.
+async function myRankProgress(req, res) {
+  const period = periodOf(new Date());
+  const { personalPV, teamPV } = await getCompressedPGPV(req.user._id, period);
+
+  const countRanks = await RankDefinition.find({ ruleType: 'count_based', active: true }).select('countCriteria');
+  const requiredNames = [...new Set(countRanks.map((r) => r.countCriteria?.requiredRankName).filter(Boolean))];
+  const requiredRankDocs = await RankDefinition.find({ name: { $in: requiredNames } }).select('name sortOrder');
+  const sortOrderByName = Object.fromEntries(requiredRankDocs.map((r) => [r.name, r.sortOrder]));
+
+  const countsByRankName = {};
+  for (const name of requiredNames) {
+    const sortOrder = sortOrderByName[name];
+    if (sortOrder === undefined) continue;
+    countsByRankName[name] = await User.countDocuments({
+      uplineChain: req.user._id,
+      currentRankSortOrder: { $gte: sortOrder },
+    });
+  }
+
+  res.json({ period, personalPV, teamPV, countsByRankName });
+}
 
 async function myDownline(req, res) {
   const directs = await User.find({ sponsor: req.user._id })
@@ -31,4 +60,4 @@ async function userDownline(req, res) {
   res.json({ downline, totalCount: downline.length });
 }
 
-module.exports = { myDownline, userDownline };
+module.exports = { myDownline, userDownline, myRankProgress };

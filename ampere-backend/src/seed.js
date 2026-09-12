@@ -23,6 +23,44 @@ const categorySeeds = [
   { name: 'Fitness', subtitle: 'Move more', sortOrder: 10 },
 ];
 
+const rankSeeds = [
+  { name: 'Seeder', sortOrder: 1, ruleType: 'gpv_threshold', criteria: { minCumulativeTeamPV: 5000 } },
+  { name: 'Planter', sortOrder: 2, ruleType: 'gpv_threshold', criteria: { minCumulativeTeamPV: 10000 } },
+  { name: 'Performer', sortOrder: 3, ruleType: 'gpv_threshold', criteria: { minCumulativeTeamPV: 25000 } },
+  {
+    name: 'Star Performer',
+    sortOrder: 4,
+    ruleType: 'gpv_threshold',
+    criteria: { minCumulativeTeamPV: 50000, minMonthlyPGPV: 1000 },
+  },
+  { name: 'Bronze Star', sortOrder: 5, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 1 } },
+  { name: 'Silver Star', sortOrder: 6, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 2 } },
+  { name: 'Gold Star', sortOrder: 7, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 3 } },
+  { name: 'Platinum', sortOrder: 8, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 4 } },
+  { name: 'Star Platinum', sortOrder: 9, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 5 } },
+  { name: 'Pearl', sortOrder: 10, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 6 } },
+  { name: 'Star Pearl', sortOrder: 11, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 7 } },
+  { name: 'Emerald', sortOrder: 12, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 8 } },
+  { name: 'Star Emerald', sortOrder: 13, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 9 } },
+  { name: 'Ruby', sortOrder: 14, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 10 } },
+  { name: 'Star Ruby', sortOrder: 15, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 11 } },
+  { name: 'Sapphire', sortOrder: 16, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 12 } },
+  { name: 'Star Sapphire', sortOrder: 17, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 13 } },
+  // Spec goes 13 -> 15, skipping 14 - implemented literally as given.
+  { name: 'Diamond', sortOrder: 18, ruleType: 'count_based', countCriteria: { requiredRankName: 'Star Performer', requiredCount: 15 } },
+  { name: 'Star Diamond', sortOrder: 19, ruleType: 'count_based', countCriteria: { requiredRankName: 'Diamond', requiredCount: 3 } },
+  { name: 'Crown Diamond', sortOrder: 20, ruleType: 'count_based', countCriteria: { requiredRankName: 'Diamond', requiredCount: 6 } },
+  { name: 'Ambassador', sortOrder: 21, ruleType: 'count_based', countCriteria: { requiredRankName: 'Diamond', requiredCount: 9 } },
+  { name: 'Crown Ambassador', sortOrder: 22, ruleType: 'count_based', countCriteria: { requiredRankName: 'Diamond', requiredCount: 12 } },
+  { name: 'Universal Crown Ambassador', sortOrder: 23, ruleType: 'count_based', countCriteria: { requiredRankName: 'Diamond', requiredCount: 15 } },
+  {
+    name: 'Double Universal Crown Ambassador',
+    sortOrder: 24,
+    ruleType: 'count_based',
+    countCriteria: { requiredRankName: 'Universal Crown Ambassador', requiredCount: 15 },
+  },
+];
+
 const productSeeds = [
   {
     name: 'Himalaya Ashwagandha Wellness Tablets',
@@ -176,33 +214,9 @@ async function seed() {
     },
   ]);
 
-  await RankDefinition.insertMany([
-    {
-      name: 'Star Performer',
-      sortOrder: 1,
-      criteria: { minCumulativeTeamPV: 500, minDirectReferrals: 1, minTeamSize: 1 },
-    },
-    {
-      name: 'Star Platinum',
-      sortOrder: 2,
-      criteria: { minCumulativeTeamPV: 2000, minDirectReferrals: 3, minTeamSize: 5 },
-    },
-    {
-      name: 'Star Pearl',
-      sortOrder: 3,
-      criteria: { minCumulativeTeamPV: 5000, minDirectReferrals: 5, minTeamSize: 15 },
-    },
-    {
-      name: 'Star Ruby',
-      sortOrder: 4,
-      criteria: { minCumulativeTeamPV: 15000, minDirectReferrals: 8, minTeamSize: 40 },
-    },
-    {
-      name: 'Diamond',
-      sortOrder: 5,
-      criteria: { minCumulativeTeamPV: 40000, minDirectReferrals: 12, minTeamSize: 100 },
-    },
-  ]);
+  // Full 24-tier chart - dev seed is already a hard reset, so just wipe and reinsert.
+  await RankDefinition.deleteMany({});
+  await RankDefinition.insertMany(rankSeeds);
 
   const categories = await Category.insertMany(categorySeeds);
   const categoryByName = Object.fromEntries(categories.map((c) => [c.name, c._id]));

@@ -2,23 +2,38 @@ import { useState } from 'react';
 import { Trophy, Plus, Pencil, Trash2 } from 'lucide-react';
 import { useCreateRank, useDeleteRank, useRanks, useUpdateRank } from '../api/hooks';
 import type { RankDefinition } from '../api/types';
-import { Badge, Button, Input, Modal, PageHeader, Spinner, EmptyState, Table, Th, Td, Tr } from '../components/ui';
+import { Badge, Button, Input, Modal, PageHeader, Select, Spinner, EmptyState, Table, Th, Td, Tr } from '../components/ui';
+
+type RuleType = RankDefinition['ruleType'];
 
 interface FormState {
   name: string;
   sortOrder: string;
+  ruleType: RuleType;
   minCumulativeTeamPV: string;
-  minDirectReferrals: string;
-  minTeamSize: string;
+  minMonthlyPGPV: string;
+  requiredRankName: string;
+  requiredCount: string;
 }
 
 const EMPTY_FORM: FormState = {
   name: '',
   sortOrder: '',
+  ruleType: 'gpv_threshold',
   minCumulativeTeamPV: '0',
-  minDirectReferrals: '0',
-  minTeamSize: '0',
+  minMonthlyPGPV: '0',
+  requiredRankName: '',
+  requiredCount: '1',
 };
+
+function requirementSummary(rank: RankDefinition) {
+  if (rank.ruleType === 'count_based') {
+    return `${rank.countCriteria.requiredCount} × ${rank.countCriteria.requiredRankName ?? '—'}+`;
+  }
+  const parts = [`${rank.criteria.minCumulativeTeamPV} GPV`];
+  if (rank.criteria.minMonthlyPGPV > 0) parts.push(`${rank.criteria.minMonthlyPGPV} PGPV/mo`);
+  return parts.join(' + ');
+}
 
 export default function RankSettings() {
   const { data: ranks = [], isLoading } = useRanks();
@@ -31,6 +46,8 @@ export default function RankSettings() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
+  const sortedRanks = [...ranks].sort((a, b) => a.sortOrder - b.sortOrder);
+
   const openCreate = () => {
     setEditingId(null);
     setForm({ ...EMPTY_FORM, sortOrder: String(ranks.length + 1) });
@@ -42,9 +59,11 @@ export default function RankSettings() {
     setForm({
       name: rank.name,
       sortOrder: String(rank.sortOrder),
-      minCumulativeTeamPV: String(rank.criteria.minCumulativeTeamPV),
-      minDirectReferrals: String(rank.criteria.minDirectReferrals),
-      minTeamSize: String(rank.criteria.minTeamSize),
+      ruleType: rank.ruleType,
+      minCumulativeTeamPV: String(rank.criteria?.minCumulativeTeamPV ?? 0),
+      minMonthlyPGPV: String(rank.criteria?.minMonthlyPGPV ?? 0),
+      requiredRankName: rank.countCriteria?.requiredRankName ?? '',
+      requiredCount: String(rank.countCriteria?.requiredCount ?? 1),
     });
     setModalOpen(true);
   };
@@ -53,15 +72,26 @@ export default function RankSettings() {
     e.preventDefault();
     setSaving(true);
     try {
-      const payload = {
-        name: form.name,
-        sortOrder: Number(form.sortOrder),
-        criteria: {
-          minCumulativeTeamPV: Number(form.minCumulativeTeamPV),
-          minDirectReferrals: Number(form.minDirectReferrals),
-          minTeamSize: Number(form.minTeamSize),
-        },
-      };
+      const payload =
+        form.ruleType === 'gpv_threshold'
+          ? {
+              name: form.name,
+              sortOrder: Number(form.sortOrder),
+              ruleType: 'gpv_threshold' as const,
+              criteria: {
+                minCumulativeTeamPV: Number(form.minCumulativeTeamPV),
+                minMonthlyPGPV: Number(form.minMonthlyPGPV),
+              },
+            }
+          : {
+              name: form.name,
+              sortOrder: Number(form.sortOrder),
+              ruleType: 'count_based' as const,
+              countCriteria: {
+                requiredRankName: form.requiredRankName,
+                requiredCount: Number(form.requiredCount),
+              },
+            };
       if (editingId) {
         await updateRank.mutateAsync({ id: editingId, payload });
       } else {
@@ -83,7 +113,7 @@ export default function RankSettings() {
       <PageHeader
         title="Rank Settings"
         icon={Trophy}
-        description="Ranks are recomputed automatically for a distributor's upline every time one of their team's orders is marked paid. A distributor qualifies for the highest rank whose criteria they meet. Bonus pools (in MLM Settings) unlock cumulatively based on a distributor's rank."
+        description="Seeder..Star Performer are matched on cumulative/monthly PV thresholds. Bronze Star and above are matched by counting downline members who hold a given rank or higher, anywhere in the downline. Ranks recompute automatically as orders and manual PV grants come in."
         action={
           <Button icon={Plus} onClick={openCreate}>
             Add Rank
@@ -93,7 +123,7 @@ export default function RankSettings() {
 
       {isLoading ? (
         <Spinner label="Loading ranks..." />
-      ) : ranks.length === 0 ? (
+      ) : sortedRanks.length === 0 ? (
         <EmptyState icon={Trophy} title="No ranks yet" description="Add your first rank tier." />
       ) : (
         <Table>
@@ -101,15 +131,14 @@ export default function RankSettings() {
             <tr>
               <Th>Order</Th>
               <Th>Name</Th>
-              <Th>Min Team PV</Th>
-              <Th>Min Direct Referrals</Th>
-              <Th>Min Team Size</Th>
+              <Th>Rule</Th>
+              <Th>Requirement</Th>
               <Th>Status</Th>
               <Th align="right"></Th>
             </tr>
           </thead>
           <tbody>
-            {ranks.map((rank) => (
+            {sortedRanks.map((rank) => (
               <Tr key={rank._id}>
                 <Td className="text-muted">{rank.sortOrder}</Td>
                 <Td>
@@ -118,9 +147,8 @@ export default function RankSettings() {
                     {rank.name}
                   </span>
                 </Td>
-                <Td className="text-fg">{rank.criteria.minCumulativeTeamPV}</Td>
-                <Td className="text-fg">{rank.criteria.minDirectReferrals}</Td>
-                <Td className="text-fg">{rank.criteria.minTeamSize}</Td>
+                <Td className="text-subtle text-xs">{rank.ruleType === 'gpv_threshold' ? 'GPV threshold' : 'Count-based'}</Td>
+                <Td className="text-fg">{requirementSummary(rank)}</Td>
                 <Td>
                   <Badge tone={rank.active ? 'green' : 'default'}>{rank.active ? 'Active' : 'Inactive'}</Badge>
                 </Td>
@@ -151,29 +179,65 @@ export default function RankSettings() {
             required
           />
           <div>
-            <label className="block text-xs text-subtle mb-1">Minimum cumulative team PV</label>
-            <Input
-              type="number"
-              value={form.minCumulativeTeamPV}
-              onChange={(e) => setForm((f) => ({ ...f, minCumulativeTeamPV: e.target.value }))}
-            />
+            <label className="block text-xs text-subtle mb-1">Rule type</label>
+            <Select value={form.ruleType} onChange={(e) => setForm((f) => ({ ...f, ruleType: e.target.value as RuleType }))}>
+              <option value="gpv_threshold">GPV threshold (e.g. Seeder..Star Performer)</option>
+              <option value="count_based">Count-based (e.g. Bronze Star..Double UCA)</option>
+            </Select>
           </div>
-          <div>
-            <label className="block text-xs text-subtle mb-1">Minimum direct referrals</label>
-            <Input
-              type="number"
-              value={form.minDirectReferrals}
-              onChange={(e) => setForm((f) => ({ ...f, minDirectReferrals: e.target.value }))}
-            />
-          </div>
-          <div>
-            <label className="block text-xs text-subtle mb-1">Minimum team size</label>
-            <Input
-              type="number"
-              value={form.minTeamSize}
-              onChange={(e) => setForm((f) => ({ ...f, minTeamSize: e.target.value }))}
-            />
-          </div>
+
+          {form.ruleType === 'gpv_threshold' ? (
+            <>
+              <div>
+                <label className="block text-xs text-subtle mb-1">Minimum cumulative team PV</label>
+                <Input
+                  type="number"
+                  value={form.minCumulativeTeamPV}
+                  onChange={(e) => setForm((f) => ({ ...f, minCumulativeTeamPV: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-subtle mb-1">
+                  Minimum current-month PGPV (0 = not required — only Star Performer typically sets this)
+                </label>
+                <Input
+                  type="number"
+                  value={form.minMonthlyPGPV}
+                  onChange={(e) => setForm((f) => ({ ...f, minMonthlyPGPV: e.target.value }))}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <label className="block text-xs text-subtle mb-1">Required rank (or higher) in the downline</label>
+                <Select
+                  value={form.requiredRankName}
+                  onChange={(e) => setForm((f) => ({ ...f, requiredRankName: e.target.value }))}
+                  required
+                >
+                  <option value="" disabled>
+                    Select a rank
+                  </option>
+                  {sortedRanks.map((r) => (
+                    <option key={r._id} value={r.name}>
+                      {r.name}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+              <div>
+                <label className="block text-xs text-subtle mb-1">Required count, anywhere in the downline</label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={form.requiredCount}
+                  onChange={(e) => setForm((f) => ({ ...f, requiredCount: e.target.value }))}
+                />
+              </div>
+            </>
+          )}
+
           <Button type="submit" loading={saving} className="w-full mt-2 justify-center">
             {saving ? 'Saving...' : 'Save Rank'}
           </Button>
