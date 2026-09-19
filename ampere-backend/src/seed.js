@@ -75,6 +75,10 @@ const productSeeds = [
     isTrending: true,
     rating: 4.6,
     numReviews: 1245,
+    images: [
+      'https://images.pexels.com/photos/208518/pexels-photo-208518.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/3873174/pexels-photo-3873174.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Accu-Chek Active Strips',
@@ -88,6 +92,10 @@ const productSeeds = [
     isFeatured: true,
     rating: 4.4,
     numReviews: 512,
+    images: [
+      'https://images.pexels.com/photos/6941883/pexels-photo-6941883.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/6941884/pexels-photo-6941884.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Ensure Diabetes Care',
@@ -101,6 +109,10 @@ const productSeeds = [
     isTrending: true,
     rating: 4.5,
     numReviews: 210,
+    images: [
+      'https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/4162487/pexels-photo-4162487.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Dabur Chwanprash',
@@ -114,6 +126,10 @@ const productSeeds = [
     isTrending: true,
     rating: 4.3,
     numReviews: 890,
+    images: [
+      'https://images.pexels.com/photos/6543197/pexels-photo-6543197.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/6693657/pexels-photo-6693657.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Volini Pain Relief Gel',
@@ -127,6 +143,10 @@ const productSeeds = [
     isTrending: true,
     rating: 4.5,
     numReviews: 670,
+    images: [
+      'https://images.pexels.com/photos/3652097/pexels-photo-3652097.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Revital H',
@@ -140,6 +160,10 @@ const productSeeds = [
     isTrending: true,
     rating: 4.2,
     numReviews: 430,
+    images: [
+      'https://images.pexels.com/photos/139398/thermometer-headache-pain-pills-139398.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/208512/pexels-photo-208512.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Paracetamol 650mg',
@@ -152,6 +176,10 @@ const productSeeds = [
     stock: 300,
     rating: 4.1,
     numReviews: 95,
+    images: [
+      'https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Vitamin D3 Tablets',
@@ -164,6 +192,10 @@ const productSeeds = [
     stock: 140,
     rating: 4.3,
     numReviews: 320,
+    images: [
+      'https://images.pexels.com/photos/3683041/pexels-photo-3683041.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/3683051/pexels-photo-3683051.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Omega 3 Fish Oil',
@@ -176,6 +208,10 @@ const productSeeds = [
     stock: 70,
     rating: 4.4,
     numReviews: 180,
+    images: [
+      'https://images.pexels.com/photos/3683039/pexels-photo-3683039.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/5726794/pexels-photo-5726794.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
   {
     name: 'Whey Protein Powder',
@@ -189,6 +225,45 @@ const productSeeds = [
     isFeatured: true,
     rating: 4.5,
     numReviews: 260,
+    images: [
+      'https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/4162491/pexels-photo-4162491.jpeg?cs=srgb&auto=compress&w=600',
+    ],
+  },
+  {
+    name: 'Dr Trust Blood Pressure Monitor',
+    category: 'Medical Devices',
+    subtitle: 'Fully Automatic',
+    description: 'Digital BP monitor for accurate home blood pressure checks.',
+    price: 1699,
+    mrp: 1999,
+    pv: 850,
+    stock: 45,
+    isFeatured: true,
+    isTrending: true,
+    rating: 4.5,
+    numReviews: 340,
+    images: [
+      'https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/4386464/pexels-photo-4386464.jpeg?cs=srgb&auto=compress&w=600',
+    ],
+  },
+  {
+    name: 'Johnson\'s Baby Lotion',
+    category: 'Baby Care',
+    subtitle: '200ml',
+    description: 'Gentle, mild moisturizing lotion for a baby\'s delicate skin.',
+    price: 175,
+    mrp: 199,
+    pv: 85,
+    stock: 200,
+    isTrending: true,
+    rating: 4.6,
+    numReviews: 980,
+    images: [
+      'https://images.pexels.com/photos/3933250/pexels-photo-3933250.jpeg?cs=srgb&auto=compress&w=600',
+      'https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?cs=srgb&auto=compress&w=600',
+    ],
   },
 ];
 
