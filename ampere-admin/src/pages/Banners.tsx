@@ -27,8 +27,6 @@ import {
 } from '../components/ui';
 
 interface FormState {
-  title: string;
-  subtitle: string;
   imageUrl: string;
   linkType: 'none' | 'product' | 'category';
   linkId: string;
@@ -37,8 +35,6 @@ interface FormState {
 }
 
 const EMPTY_FORM: FormState = {
-  title: '',
-  subtitle: '',
   imageUrl: '',
   linkType: 'none',
   linkId: '',
@@ -69,8 +65,6 @@ export default function Banners() {
   const openEdit = (banner: Banner) => {
     setEditingId(banner._id);
     setForm({
-      title: banner.title,
-      subtitle: banner.subtitle,
       imageUrl: banner.imageUrl,
       linkType: banner.linkType,
       linkId: banner.linkId ?? '',
@@ -92,8 +86,6 @@ export default function Banners() {
     setSaving(true);
     try {
       const payload: Partial<Banner> = {
-        title: form.title,
-        subtitle: form.subtitle,
         imageUrl: form.imageUrl,
         linkType: form.linkType,
         linkId: form.linkType === 'none' ? undefined : form.linkId || undefined,
@@ -138,7 +130,6 @@ export default function Banners() {
           <thead>
             <tr>
               <Th>Image</Th>
-              <Th>Title</Th>
               <Th>Link</Th>
               <Th>Order</Th>
               <Th>Status</Th>
@@ -157,7 +148,6 @@ export default function Banners() {
                       <div className="w-20 h-12 rounded-lg bg-surface-2 border border-border" />
                     )}
                   </Td>
-                  <Td className="text-fg whitespace-pre-line font-medium">{banner.title}</Td>
                   <Td className="text-muted">
                     {banner.linkType === 'none' ? (
                       '—'
@@ -191,22 +181,6 @@ export default function Banners() {
 
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editingId ? 'Edit Banner' : 'Add Banner'}>
         <form onSubmit={onSubmit} className="space-y-3">
-          <div>
-            <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">Title</label>
-            <textarea
-              value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-              className="w-full bg-surface-2 border border-border rounded-xl px-3.5 py-2.5 text-sm text-fg placeholder:text-subtle outline-none transition-all focus:border-accent-border focus:ring-4 focus:ring-accent-soft resize-none"
-              rows={2}
-              placeholder={'e.g. Your Health\nOur Priority'}
-            />
-          </div>
-          <Input
-            placeholder="Subtitle (e.g. Up to 30% Off)"
-            value={form.subtitle}
-            onChange={(e) => setForm((f) => ({ ...f, subtitle: e.target.value }))}
-          />
-
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">
               Banner Image

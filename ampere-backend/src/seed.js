@@ -280,8 +280,6 @@ async function seed() {
 
   await Banner.insertMany([
     {
-      title: 'Your Health\nOur Priority',
-      subtitle: 'Up to 30% Off',
       imageUrl: 'https://images.pexels.com/photos/20140029/pexels-photo-20140029.jpeg?cs=srgb&auto=compress&w=400',
       linkType: 'none',
       sortOrder: 1,

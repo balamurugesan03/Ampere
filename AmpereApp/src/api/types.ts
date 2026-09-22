@@ -105,8 +105,6 @@ export interface DownlineUser {
 
 export interface Banner {
   _id: string;
-  title: string;
-  subtitle: string;
   imageUrl: string;
   linkType: 'none' | 'product' | 'category';
   linkId?: string;

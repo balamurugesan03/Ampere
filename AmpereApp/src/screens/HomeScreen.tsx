@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, Image, Pressable, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Rect, Circle, Ellipse, Line } from 'react-native-svg';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
@@ -97,31 +96,12 @@ export default function HomeScreen({ navigation }: Props) {
           >
             {banners.map((banner) => (
               <View key={banner._id} style={[styles.bannerShadowWrap, { width: BANNER_WIDTH }]}>
-                <LinearGradient
-                  colors={['#2a8f4c', '#0f3d22']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.banner}
+                <Pressable
+                  style={({ pressed }) => [styles.banner, pressed && styles.pressedFade]}
+                  onPress={() => onBannerShopNow(banner)}
                 >
-                  {!!banner.title && <Text style={styles.bannerTitle}>{banner.title}</Text>}
-                  {!!banner.subtitle && <Text style={styles.bannerOff}>{banner.subtitle}</Text>}
-                  <Pressable
-                    style={({ pressed }) => [styles.shopBtn, pressed && styles.pressedFade]}
-                    onPress={() => onBannerShopNow(banner)}
-                  >
-                    <Text style={styles.shopBtnText}>Shop Now</Text>
-                  </Pressable>
-
                   <Image style={styles.bannerImg} source={{ uri: resolveMediaUrl(banner.imageUrl) }} />
-                  <LinearGradient
-                    pointerEvents="none"
-                    colors={['#0f3d22', 'transparent', 'transparent']}
-                    locations={[0, 0.4, 1]}
-                    start={{ x: 0, y: 0.5 }}
-                    end={{ x: 1, y: 0.5 }}
-                    style={styles.bannerImgMask}
-                  />
-                </LinearGradient>
+                </Pressable>
               </View>
             ))}
           </ScrollView>
@@ -282,50 +262,12 @@ const styles = StyleSheet.create({
   banner: {
     position: 'relative',
     borderRadius: 18,
-    padding: 18,
     overflow: 'hidden',
     height: 150,
   },
-  bannerTitle: {
-    color: '#fff',
-    fontSize: 19,
-    fontFamily: fonts.extraBold,
-    lineHeight: 24,
-  },
-  bannerOff: {
-    color: '#e9f7ec',
-    fontSize: 12,
-    marginTop: 6,
-    marginBottom: 12,
-    fontFamily: fonts.regular,
-  },
-  shopBtn: {
-    backgroundColor: '#fff',
-    borderRadius: 999,
-    paddingVertical: 8,
-    paddingHorizontal: 18,
-    alignSelf: 'flex-start',
-  },
-  shopBtnText: {
-    color: '#0f3d22',
-    fontSize: 12.5,
-    fontFamily: fonts.extraBold,
-  },
   bannerImg: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    width: 150,
-    height: 150,
-    borderTopRightRadius: 18,
-    borderBottomRightRadius: 18,
-  },
-  bannerImgMask: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    width: 150,
-    height: 150,
+    width: '100%',
+    height: '100%',
   },
   sectionRow: {
     flexDirection: 'row',
