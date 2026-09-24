@@ -18,6 +18,7 @@ import {
 import type { RootStackParamList } from './src/navigation/types';
 import { colors } from './src/theme/colors';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
+import ErrorBoundary from './src/components/ErrorBoundary';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -114,11 +115,13 @@ export default function App() {
     <SafeAreaProvider>
       <View style={styles.root} onLayout={onLayoutRootView}>
         <StatusBar style="light" />
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <RootNavigator />
-          </AuthProvider>
-        </QueryClientProvider>
+        <ErrorBoundary>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <RootNavigator />
+            </AuthProvider>
+          </QueryClientProvider>
+        </ErrorBoundary>
       </View>
     </SafeAreaProvider>
   );

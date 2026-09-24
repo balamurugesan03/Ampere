@@ -13,12 +13,14 @@ async function createOrder(req, res) {
   }
 
   const user = await User.findById(req.user._id).populate('cart.product');
-  if (!user.cart.length) return res.status(400).json({ message: 'Cart is empty' });
+  // Skip products that were deleted after being added to the cart.
+  const cartItems = user.cart.filter((item) => item.product);
+  if (!cartItems.length) return res.status(400).json({ message: 'Cart is empty' });
 
   const address = user.addresses.id(addressId);
   if (!address) return res.status(404).json({ message: 'Address not found' });
 
-  const items = user.cart.map((item) => ({
+  const items = cartItems.map((item) => ({
     product: item.product._id,
     name: item.product.name,
     price: item.product.price,

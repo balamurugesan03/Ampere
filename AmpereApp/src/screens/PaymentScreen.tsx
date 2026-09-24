@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Pressable, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Rect, Circle, Text as SvgText } from 'react-native-svg';
@@ -9,7 +9,7 @@ import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import { useCart, useCreateOrder, usePaymentSettings } from '../api/hooks';
-import { resolveMediaUrl } from '../api/client';
+import { getErrorMessage, resolveMediaUrl } from '../api/client';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Payment'>;
 type PaymentMethod = 'UPI_QR' | 'COD';
@@ -27,8 +27,12 @@ export default function PaymentScreen({ navigation, route }: Props) {
   const qrImageUri = resolveMediaUrl(paymentSettings?.qrImageUrl);
 
   const placeOrder = async () => {
-    await createOrder.mutateAsync({ addressId, deliverySlot, paymentMethod: method });
-    navigation.navigate('Home');
+    try {
+      await createOrder.mutateAsync({ addressId, deliverySlot, paymentMethod: method });
+      navigation.navigate('Home');
+    } catch (err) {
+      Alert.alert('Order failed', getErrorMessage(err));
+    }
   };
 
   return (

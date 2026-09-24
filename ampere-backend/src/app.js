@@ -1,4 +1,6 @@
 const express = require('express');
+// Send errors thrown in async route handlers to the error middleware instead of crashing the process.
+require('express-async-errors');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
@@ -47,6 +49,12 @@ app.use('/api/admin', adminRoutes);
 app.use((req, res) => res.status(404).json({ message: 'Not found' }));
 
 app.use((err, req, res, next) => {
+  if (err.name === 'CastError') {
+    return res.status(400).json({ message: `Invalid ${err.path}` });
+  }
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({ message: err.message });
+  }
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || 'Server error' });
 });

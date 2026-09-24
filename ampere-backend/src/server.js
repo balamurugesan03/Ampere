@@ -2,7 +2,12 @@ require('dotenv').config();
 const app = require('./app');
 const connectDB = require('./config/db');
 
-const PORT = process.env.PORT || 4000;
+// Log instead of letting a stray rejection take the whole server down.
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled rejection', err);
+});
+
+const PORT =process.env.PORT || 4000;
 
 connectDB()
   .then(() => {

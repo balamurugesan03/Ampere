@@ -22,18 +22,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     (async () => {
-      const token = await AsyncStorage.getItem(TOKEN_KEY);
-      if (token) {
-        setAuthToken(token);
-        try {
-          const { data } = await api.get('/auth/me');
-          setUser(data.user);
-        } catch {
-          await AsyncStorage.removeItem(TOKEN_KEY);
-          setAuthToken(null);
+      try {
+        const token = await AsyncStorage.getItem(TOKEN_KEY);
+        if (token) {
+          setAuthToken(token);
+          try {
+            const { data } = await api.get('/auth/me');
+            setUser(data.user);
+          } catch (err: any) {
+            // Only drop the session when the server rejects the token, not on a network blip.
+            if (err?.response?.status === 401) {
+              await AsyncStorage.removeItem(TOKEN_KEY);
+              setAuthToken(null);
+            }
+          }
         }
+      } catch {
+        // Storage failure: continue as signed out rather than hanging on the spinner.
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     })();
   }, []);
 

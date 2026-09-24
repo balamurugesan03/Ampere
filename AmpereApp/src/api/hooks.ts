@@ -58,6 +58,8 @@ export function useCart() {
   return useQuery({
     queryKey: ['cart'],
     queryFn: async () => (await api.get<{ cart: CartItem[] }>('/cart')).data.cart,
+    // A product deleted after being carted comes back as null; rendering it would crash.
+    select: (cart) => cart.filter((item) => item.product),
   });
 }
 

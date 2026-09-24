@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Circle } from 'react-native-svg';
@@ -9,6 +9,7 @@ import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import { useAddAddress, useAddresses, useCart } from '../api/hooks';
+import { getErrorMessage } from '../api/client';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
@@ -40,9 +41,13 @@ export default function CheckoutScreen({ navigation }: Props) {
 
   const submitAddress = async () => {
     if (!form.contactName || !form.phone || !form.line || !form.city || !form.state || !form.pincode) return;
-    await addAddress.mutateAsync({ ...form, label: 'Home', isDefault: addresses.length === 0 });
-    setForm({ contactName: '', phone: '', line: '', city: '', state: '', pincode: '' });
-    setShowAddForm(false);
+    try {
+      await addAddress.mutateAsync({ ...form, label: 'Home', isDefault: addresses.length === 0 });
+      setForm({ contactName: '', phone: '', line: '', city: '', state: '', pincode: '' });
+      setShowAddForm(false);
+    } catch (err) {
+      Alert.alert('Could not save address', getErrorMessage(err));
+    }
   };
 
   return (

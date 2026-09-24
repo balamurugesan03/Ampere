@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Pressable, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient as ExpoLinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Rect, Circle, Ellipse, G, Line, Defs, LinearGradient, RadialGradient, Stop } from 'react-native-svg';
@@ -9,18 +9,34 @@ import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import { useProduct, useAddToCart } from '../api/hooks';
-import { resolveMediaUrl } from '../api/client';
+import { getErrorMessage, resolveMediaUrl } from '../api/client';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Product'>;
 
 export default function ProductScreen({ navigation, route }: Props) {
   const { productId } = route.params;
-  const { data: product, isLoading } = useProduct(productId);
+  const { data: product, isLoading, isError } = useProduct(productId);
   const addToCart = useAddToCart();
 
-  const handleAddToCart = async () => {
-    await addToCart.mutateAsync({ productId });
+  const addToCartThen = async (next: 'Cart' | 'Checkout') => {
+    try {
+      await addToCart.mutateAsync({ productId });
+      navigation.navigate(next);
+    } catch (err) {
+      Alert.alert('Could not add to cart', getErrorMessage(err));
+    }
   };
+
+  if (isError) {
+    return (
+      <SafeAreaView style={[styles.phone, styles.loadingWrap]} edges={['top', 'bottom']}>
+        <Text style={styles.productSub}>This product is no longer available.</Text>
+        <Pressable onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.productName}>Go back</Text>
+        </Pressable>
+      </SafeAreaView>
+    );
+  }
 
   if (isLoading || !product) {
     return (
@@ -125,9 +141,9 @@ export default function ProductScreen({ navigation, route }: Props) {
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productSub}>{product.subtitle}</Text>
           <View style={styles.ratingRow}>
-            <Text style={styles.ratingScore}>{product.rating.toFixed(1)}</Text>
+            <Text style={styles.ratingScore}>{(product.rating ?? 0).toFixed(1)}</Text>
             <Text style={styles.ratingStars}>{'★★★★★'}</Text>
-            <Text style={styles.ratingCount}>({product.numReviews.toLocaleString()} reviews)</Text>
+            <Text style={styles.ratingCount}>({(product.numReviews ?? 0).toLocaleString()} reviews)</Text>
           </View>
           <View style={styles.priceRow}>
             <Text style={styles.priceNow}>{'₹'}{product.price}</Text>
@@ -173,19 +189,13 @@ export default function ProductScreen({ navigation, route }: Props) {
           </View>
           <Pressable
             style={({ pressed }) => [styles.addCartBtn, pressed && styles.pressedFade]}
-            onPress={async () => {
-              await handleAddToCart();
-              navigation.navigate('Cart');
-            }}
+            onPress={() => addToCartThen('Cart')}
           >
             <Text style={styles.addCartBtnText}>Add to Cart</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [styles.buyNowBtnWrap, pressed && styles.pressedScale]}
-            onPress={async () => {
-              await handleAddToCart();
-              navigation.navigate('Checkout');
-            }}
+            onPress={() => addToCartThen('Checkout')}
           >
             <ExpoLinearGradient
               colors={colors.greenGradient}
