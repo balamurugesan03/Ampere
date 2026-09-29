@@ -2,7 +2,7 @@ const User = require('../models/User');
 const MLMSettings = require('../models/MLMSettings');
 const MonthlyPV = require('../models/MonthlyPV');
 const CommissionTransaction = require('../models/CommissionTransaction');
-const { recomputeRank, recomputeRankForChain, recomputeGpvTierOnlyForChain } = require('./rankService');
+const { recomputeRank, recomputeUplineAfterPV } = require('./rankService');
 const { getCompressedPGPV } = require('./pgpvService');
 const { periodOf } = require('../utils/period');
 
@@ -86,6 +86,14 @@ async function creditPVEarnings({ userId, totalPV, sourceType, sourceOrder, sour
   });
 
   await addPersonalPV(buyer._id, period, totalPV);
+  if (buyer.uplineChain && buyer.uplineChain.length) {
+    // New PV changes every ancestor's compressed PGPV - drop the memoized value so the
+    // PGPV gate below (and Star Performer's PGPV check) sees this purchase immediately.
+    await MonthlyPV.updateMany(
+      { user: { $in: buyer.uplineChain }, period },
+      { $unset: { teamPVComputedAt: 1 } }
+    );
+  }
 
   // Development Bonus - up to 10 levels, PGPV-gated per level
   const chain = (buyer.uplineChain || []).slice(0, 10);
@@ -112,18 +120,13 @@ async function creditPVEarnings({ userId, totalPV, sourceType, sourceOrder, sour
     });
   }
 
-  // Rank recompute: full for the buyer; for the upline chain, cheap GPV-only unless the
-  // buyer's own rank just crossed a boundary (only then can a count-based ancestor rank
-  // change), matching how cumulativeTeamPV feeds both tiers.
+  // Rank recompute: full for the buyer; for the upline chain, cheap GPV-only until some
+  // rank at or below an ancestor changes (only then can a count-based rank above it change).
   const buyerRankChanged = await recomputeRank(buyer._id, { period });
 
   if (buyer.uplineChain && buyer.uplineChain.length) {
     await User.updateMany({ _id: { $in: buyer.uplineChain } }, { $inc: { cumulativeTeamPV: totalPV } });
-    if (buyerRankChanged) {
-      await recomputeRankForChain(buyer.uplineChain, { period });
-    } else {
-      await recomputeGpvTierOnlyForChain(buyer.uplineChain, period);
-    }
+    await recomputeUplineAfterPV(buyer.uplineChain, period, buyerRankChanged);
   }
 }
 

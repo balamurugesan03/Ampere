@@ -115,7 +115,7 @@ export default function Payouts() {
         Monthly Bonus Pool Payout Run
       </h2>
       <p className="text-muted text-sm mb-4 max-w-2xl">
-        Distributes the company-wide bonus pools (Performance, Gold Coin, Travel, Car, House, Profit
+        Distributes the company-wide bonus pools (Performance, Gold Ornaments, Travel, Car, House, Profit
         Share) configured in MLM Settings, split equally among all rank-qualified, PGPV-active
         distributors for the chosen month. Each period can only be run once — void a run to correct it
         and re-run.

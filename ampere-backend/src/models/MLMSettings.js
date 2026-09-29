@@ -30,7 +30,7 @@ const mlmSettingsSchema = new mongoose.Schema(
         { key: 'performance', label: 'Performance Bonus', percentOfCompanyPV: 1, minRankSortOrder: 4 }, // Star Performer
         { key: 'android', label: 'Android Fund', percentOfCompanyPV: 1, minRankSortOrder: 4 },
         { key: 'silverCoin', label: 'Silver Coin Fund', percentOfCompanyPV: 1, minRankSortOrder: 4 },
-        { key: 'goldCoin', label: 'Gold Coin Fund', percentOfCompanyPV: 2, minRankSortOrder: 5 }, // Bronze Star
+        { key: 'goldCoin', label: 'Gold Ornaments Savings Fund', percentOfCompanyPV: 2, minRankSortOrder: 4 }, // Star Performer
         { key: 'travel', label: 'Travel Fund', percentOfCompanyPV: 2, minRankSortOrder: 5 },
         { key: 'twoWheeler', label: 'Two Wheeler Fund', percentOfCompanyPV: 3, minRankSortOrder: 6 }, // Silver Star
         { key: 'car', label: 'Car Fund', percentOfCompanyPV: 3, minRankSortOrder: 7 }, // Gold Star

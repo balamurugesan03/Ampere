@@ -133,7 +133,7 @@ export interface RankDefinition {
     minMonthlyPGPV: number;
   };
   // count_based ranks: matched by counting downline members ranked at or above
-  // `requiredRankName`, anywhere in the downline.
+  // `requiredRankName`, counted once per direct leg.
   countCriteria: {
     requiredRankName: string | null;
     requiredCount: number;

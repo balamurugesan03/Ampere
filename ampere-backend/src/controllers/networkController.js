@@ -1,12 +1,13 @@
 const User = require('../models/User');
 const RankDefinition = require('../models/RankDefinition');
 const { getCompressedPGPV } = require('../services/pgpvService');
+const { countQualifyingLegs } = require('../services/rankService');
 const { periodOf } = require('../utils/period');
 
 // Feeds the "next rank" progress display: compressed PGPV for the current period, plus,
 // for every rank name any count_based RankDefinition references (Star Performer, Diamond,
-// Universal Crown Ambassador in the default chart), how many downline members the caller
-// currently has at that rank or higher, anywhere in their downline.
+// Universal Crown Ambassador in the default chart), how many of the caller's direct legs
+// currently contain a member at that rank or higher.
 async function myRankProgress(req, res) {
   const period = periodOf(new Date());
   const { personalPV, teamPV } = await getCompressedPGPV(req.user._id, period);
@@ -20,10 +21,7 @@ async function myRankProgress(req, res) {
   for (const name of requiredNames) {
     const sortOrder = sortOrderByName[name];
     if (sortOrder === undefined) continue;
-    countsByRankName[name] = await User.countDocuments({
-      uplineChain: req.user._id,
-      currentRankSortOrder: { $gte: sortOrder },
-    });
+    countsByRankName[name] = await countQualifyingLegs(req.user._id, sortOrder);
   }
 
   res.json({ period, personalPV, teamPV, countsByRankName });

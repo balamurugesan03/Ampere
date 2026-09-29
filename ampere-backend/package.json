@@ -8,7 +8,9 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "seed": "node src/seed.js",
-    "seed:prod": "node src/seedProd.js"
+    "seed:prod": "node src/seedProd.js",
+    "test:mlm-flow": "node src/scripts/mlmFlowTest.js",
+    "seed:mlm-demo": "node src/scripts/mlmFlowTest.js --demo"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

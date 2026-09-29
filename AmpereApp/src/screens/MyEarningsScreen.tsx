@@ -34,8 +34,8 @@ export default function MyEarningsScreen({ navigation }: Props) {
   const nextRank = sortedRanks.find((r) => r.sortOrder > (user?.currentRankSortOrder ?? 0));
 
   // gpv_threshold ranks (Seeder..Star Performer) progress on lifetime cumulativeTeamPV;
-  // count_based ranks (Bronze Star..Double UCA) progress on how many qualifying members
-  // are anywhere in the downline - these use different units, so they need different copy.
+  // count_based ranks (Bronze Star..Double UCA) progress on how many direct legs
+  // contain a qualifying member - these use different units, so they need different copy.
   let progress = 1;
   let progressLabel = '';
   if (nextRank) {

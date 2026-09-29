@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // - 'gpv_threshold' (Seeder..Star Performer): matched against cumulativeTeamPV (lifetime,
 //   uncompressed) and, for Star Performer only, the current month's compressed PGPV.
 // - 'count_based' (Bronze Star..Double UCA): matched by counting downline members who
-//   themselves hold `countCriteria.requiredRankName` or higher, anywhere in the downline.
+//   themselves hold `countCriteria.requiredRankName` or higher - one per direct leg.
 const rankDefinitionSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true, trim: true },

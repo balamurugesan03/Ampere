@@ -113,7 +113,7 @@ export default function RankSettings() {
       <PageHeader
         title="Rank Settings"
         icon={Trophy}
-        description="Seeder..Star Performer are matched on cumulative/monthly PV thresholds. Bronze Star and above are matched by counting downline members who hold a given rank or higher, anywhere in the downline. Ranks recompute automatically as orders and manual PV grants come in."
+        description="Seeder..Star Performer are matched on cumulative/monthly PV thresholds. Bronze Star and above are matched by counting direct legs that contain a member holding a given rank or higher (one per leg). Ranks recompute automatically as orders and manual PV grants come in."
         action={
           <Button icon={Plus} onClick={openCreate}>
             Add Rank
@@ -227,7 +227,7 @@ export default function RankSettings() {
                 </Select>
               </div>
               <div>
-                <label className="block text-xs text-subtle mb-1">Required count, anywhere in the downline</label>
+                <label className="block text-xs text-subtle mb-1">Required count of direct legs</label>
                 <Input
                   type="number"
                   min={1}
