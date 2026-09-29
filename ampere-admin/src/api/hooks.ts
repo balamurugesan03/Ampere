@@ -195,6 +195,26 @@ export function useUpdateAdminUser() {
   });
 }
 
+export interface CreateUserInput {
+  name: string;
+  email: string;
+  phone?: string;
+  password: string;
+  sponsorReferralCode?: string;
+}
+
+export function useCreateAdminUser() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: CreateUserInput) =>
+      (await api.post<{ user: AdminUser; sponsorName: string | null }>('/admin/users', input)).data,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-users'] });
+      qc.invalidateQueries({ queryKey: ['dashboard-stats'] });
+    },
+  });
+}
+
 // Upload
 export function useUploadImage() {
   return useMutation({

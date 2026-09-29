@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDashboardStats, listUsers, updateUser, uploadFile } = require('../controllers/adminController');
+const { getDashboardStats, listUsers, createUser, updateUser, uploadFile } = require('../controllers/adminController');
 const { listAllOrders, updateOrderStatus } = require('../controllers/orderController');
 const { userDownline } = require('../controllers/networkController');
 const { userWallet, userTransactions, creditWallet } = require('../controllers/walletController');
@@ -31,6 +31,7 @@ router.get('/dashboard/stats', getDashboardStats);
 router.get('/orders', listAllOrders);
 router.put('/orders/:id/status', updateOrderStatus);
 router.get('/users', listUsers);
+router.post('/users', createUser);
 router.put('/users/:id', updateUser);
 router.post('/upload', upload.single('file'), uploadFile);
 

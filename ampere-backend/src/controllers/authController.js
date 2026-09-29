@@ -1,12 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
-const {
-  generateReferralCode,
-  resolveSponsor,
-  buildUplineChain,
-  incrementUplineCounters,
-} = require('../services/referralService');
+const { resolveSponsor, createMember } = require('../services/referralService');
 
 function toPublicUser(user) {
   return {
@@ -39,22 +34,7 @@ async function signup(req, res) {
   const sponsor = await resolveSponsor(referralCode);
   if (!sponsor) return res.status(400).json({ message: 'Invalid referral code' });
 
-  const passwordHash = await bcrypt.hash(password, 10);
-  const ownReferralCode = await generateReferralCode();
-  const uplineChain = buildUplineChain(sponsor);
-
-  const user = await User.create({
-    name,
-    email,
-    passwordHash,
-    phone,
-    role: 'customer',
-    referralCode: ownReferralCode,
-    sponsor: sponsor._id,
-    uplineChain,
-  });
-
-  await incrementUplineCounters(uplineChain);
+  const user = await createMember({ name, email, password, phone, sponsor });
 
   res.status(201).json({ token: generateToken(user._id), user: toPublicUser(user) });
 }

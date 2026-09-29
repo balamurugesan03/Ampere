@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users as UsersIcon, Share2, Ban, CheckCircle2, Trophy, PlusCircle, Wallet, History, Undo2 } from 'lucide-react';
+import { Users as UsersIcon, Share2, Ban, CheckCircle2, Trophy, PlusCircle, Wallet, History, Undo2, UserPlus } from 'lucide-react';
 import {
   useAdminUsers,
+  useCreateAdminUser,
   useCreditWallet,
   useGrantPV,
   useRevokeGrant,
@@ -21,10 +22,20 @@ export default function Users() {
   const [grantTarget, setGrantTarget] = useState<AdminUser | null>(null);
   const [creditTarget, setCreditTarget] = useState<AdminUser | null>(null);
   const [historyTarget, setHistoryTarget] = useState<AdminUser | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
 
   return (
     <div>
-      <PageHeader title="Users" icon={UsersIcon} description="Every distributor and customer in your network." />
+      <PageHeader
+        title="Users"
+        icon={UsersIcon}
+        description="Every distributor and customer in your network."
+        action={
+          <Button icon={UserPlus} onClick={() => setAddOpen(true)}>
+            Add User
+          </Button>
+        }
+      />
 
       {isLoading ? (
         <Spinner label="Loading users..." />
@@ -99,10 +110,105 @@ export default function Users() {
         </Table>
       )}
 
+      <AddUserModal open={addOpen} onClose={() => setAddOpen(false)} />
       <GrantPVModal user={grantTarget} onClose={() => setGrantTarget(null)} />
       <CreditWalletModal user={creditTarget} onClose={() => setCreditTarget(null)} />
       <HistoryModal user={historyTarget} onClose={() => setHistoryTarget(null)} />
     </div>
+  );
+}
+
+const emptyUserForm = { name: '', email: '', phone: '', password: '', sponsorReferralCode: '' };
+
+function AddUserModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const createUser = useCreateAdminUser();
+  const [form, setForm] = useState(emptyUserForm);
+  const [error, setError] = useState('');
+  const [created, setCreated] = useState<{ user: AdminUser; sponsorName: string | null } | null>(null);
+
+  const set = (key: keyof typeof emptyUserForm) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const close = () => {
+    setForm(emptyUserForm);
+    setError('');
+    setCreated(null);
+    onClose();
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      setCreated(await createUser.mutateAsync(form));
+    } catch (err: any) {
+      setError(err?.response?.data?.message || 'Could not create user');
+    }
+  };
+
+  const addAnother = () => {
+    // Keep the sponsor so several IDs can be added under the same person in a row.
+    setForm({ ...emptyUserForm, sponsorReferralCode: form.sponsorReferralCode });
+    setCreated(null);
+  };
+
+  return (
+    <Modal open={open} onClose={close} title="Add User">
+      {created ? (
+        <div className="space-y-4">
+          <div className="border border-accent-border bg-accent-soft rounded-md p-4 text-center">
+            <p className="text-xs text-subtle">Referral code for {created.user.name}</p>
+            <p className="text-2xl font-bold text-accent tracking-wider mt-1">{created.user.referralCode}</p>
+            <p className="text-xs text-subtle mt-2">
+              {created.sponsorName ? `Sponsor: ${created.sponsorName}` : 'Top-level ID (no sponsor)'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="secondary" onClick={addAnother} className="flex-1 justify-center">
+              Add another
+            </Button>
+            <Button onClick={close} className="flex-1 justify-center">
+              Done
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} className="space-y-3">
+          <p className="text-xs text-subtle">
+            The referral code is generated automatically in sequence (AMP0001, AMP0002, ...).
+          </p>
+          <div>
+            <label className="block text-xs text-subtle mb-1">Name</label>
+            <Input value={form.name} onChange={set('name')} required />
+          </div>
+          <div>
+            <label className="block text-xs text-subtle mb-1">Email (login ID)</label>
+            <Input type="email" value={form.email} onChange={set('email')} required />
+          </div>
+          <div>
+            <label className="block text-xs text-subtle mb-1">Phone</label>
+            <Input value={form.phone} onChange={set('phone')} />
+          </div>
+          <div>
+            <label className="block text-xs text-subtle mb-1">Password</label>
+            <Input type="text" minLength={6} value={form.password} onChange={set('password')} required />
+          </div>
+          <div>
+            <label className="block text-xs text-subtle mb-1">Sponsor referral code (empty = top-level ID)</label>
+            <Input
+              value={form.sponsorReferralCode}
+              onChange={set('sponsorReferralCode')}
+              placeholder="e.g. AMP0001"
+              className="uppercase"
+            />
+          </div>
+          {error && <p className="text-xs text-danger">{error}</p>}
+          <Button type="submit" loading={createUser.isPending} className="w-full justify-center">
+            {createUser.isPending ? 'Creating...' : 'Create User'}
+          </Button>
+        </form>
+      )}
+    </Modal>
   );
 }
 

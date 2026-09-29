@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, Loader2, X, type LucideIcon } from 'lucide-react';
 
 export function Card({
@@ -147,7 +148,9 @@ export function Modal({
   children: React.ReactNode;
 }) {
   if (!open) return null;
-  return (
+  // Portal to <body>: page wrappers use transform animations, which would otherwise make
+  // `fixed` relative to the (possibly very tall) page instead of the viewport.
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fade-in"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
@@ -167,7 +170,8 @@ export function Modal({
         </div>
         <div className="p-6">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
