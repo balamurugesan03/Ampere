@@ -10,7 +10,8 @@
     "seed": "node src/seed.js",
     "seed:prod": "node src/seedProd.js",
     "test:mlm-flow": "node src/scripts/mlmFlowTest.js",
-    "seed:mlm-demo": "node src/scripts/mlmFlowTest.js --demo"
+    "seed:mlm-demo": "node src/scripts/mlmFlowTest.js --demo",
+    "erase:mlm-demo": "node src/scripts/mlmFlowTest.js --erase"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

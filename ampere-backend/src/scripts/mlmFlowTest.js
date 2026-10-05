@@ -21,6 +21,7 @@
  *   npm run seed:mlm-demo              # all 4 stages (Company ends at Diamond)
  *   npm run seed:mlm-demo -- --upto=3  # stop once Company is Star Performer, so the leg
  *                                      # upgrades can be shown live via admin "Grant PV"
+ *   npm run erase:mlm-demo             # delete the demo tree from the real DB and exit
  */
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
@@ -34,6 +35,8 @@ const Category = require('../models/Category');
 const MLMSettings = require('../models/MLMSettings');
 const RankDefinition = require('../models/RankDefinition');
 const CommissionTransaction = require('../models/CommissionTransaction');
+const Notification = require('../models/Notification');
+const WalletPayout = require('../models/WalletPayout');
 const { rankSeeds } = require('../seed');
 const { creditOrderCommissions } = require('../services/commissionService');
 const { runMonthlyPayout, voidPayoutRun, computeTotalCompanyPV } = require('../services/payoutRunService');
@@ -47,7 +50,8 @@ const COMPANY_OWN_PV = 1000; // keeps the Company ID PGPV-qualified (threshold 1
 const PUMP_PV = 5000;
 const STAR_PERFORMER_BV = 50000;
 
-const DEMO = process.argv.includes('--demo');
+const ERASE = process.argv.includes('--erase');
+const DEMO = ERASE || process.argv.includes('--demo');
 const UPTO = Number((process.argv.find((a) => a.startsWith('--upto=')) || '--upto=4').split('=')[1]);
 const DEMO_EMAIL_DOMAIN = 'demo.local';
 const DEMO_PASSWORD = 'Demo@1234';
@@ -206,25 +210,33 @@ async function setupTestDb() {
   return User.create({ name: 'Admin', email: 'admin@test.local', passwordHash: 'x', role: 'admin' });
 }
 
+// Deletes the demo tree (users on DEMO_EMAIL_DOMAIN) and everything they generated.
+async function eraseDemoData() {
+  const escaped = DEMO_EMAIL_DOMAIN.replace('.', '\\.');
+  const oldIds = (await User.find({ email: new RegExp(`@${escaped}$`) }).select('_id')).map((u) => u._id);
+  if (!oldIds.length) {
+    console.log('   no demo data found');
+    return;
+  }
+  const oldOrders = (await Order.find({ user: { $in: oldIds } }).select('_id')).map((o) => o._id);
+  await CommissionTransaction.deleteMany({ $or: [{ user: { $in: oldIds } }, { sourceOrder: { $in: oldOrders } }] });
+  await Promise.all([
+    Order.deleteMany({ _id: { $in: oldOrders } }),
+    MonthlyPV.deleteMany({ user: { $in: oldIds } }),
+    ManualPVGrant.deleteMany({ user: { $in: oldIds } }),
+    Notification.deleteMany({ user: { $in: oldIds } }),
+    WalletPayout.deleteMany({ user: { $in: oldIds } }),
+  ]);
+  await User.deleteMany({ _id: { $in: oldIds } });
+  console.log(`   removed demo data: ${oldIds.length} users, ${oldOrders.length} orders`);
+}
+
 // Demo mode: the real DB. Removes only a previous demo tree (users on DEMO_EMAIL_DOMAIN and
 // everything they generated), reuses the existing rank chart and a real product.
 async function setupDemoDb() {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log(`Demo DB: ${mongoose.connection.host}/${mongoose.connection.name} (keeping existing data)`);
-
-  const escaped = DEMO_EMAIL_DOMAIN.replace('.', '\\.');
-  const oldIds = (await User.find({ email: new RegExp(`@${escaped}$`) }).select('_id')).map((u) => u._id);
-  if (oldIds.length) {
-    const oldOrders = (await Order.find({ user: { $in: oldIds } }).select('_id')).map((o) => o._id);
-    await CommissionTransaction.deleteMany({ $or: [{ user: { $in: oldIds } }, { sourceOrder: { $in: oldOrders } }] });
-    await Promise.all([
-      Order.deleteMany({ _id: { $in: oldOrders } }),
-      MonthlyPV.deleteMany({ user: { $in: oldIds } }),
-      ManualPVGrant.deleteMany({ user: { $in: oldIds } }),
-    ]);
-    await User.deleteMany({ _id: { $in: oldIds } });
-    console.log(`   removed previous demo data: ${oldIds.length} users, ${oldOrders.length} orders`);
-  }
+  await eraseDemoData();
 
   if (!(await RankDefinition.countDocuments())) await RankDefinition.insertMany(rankSeeds);
   settings = await MLMSettings.getSingleton();
@@ -243,6 +255,13 @@ async function setupDemoDb() {
 }
 
 async function main() {
+  if (ERASE) {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log(`Erasing demo data from ${mongoose.connection.host}/${mongoose.connection.name}`);
+    await eraseDemoData();
+    await mongoose.disconnect();
+    return;
+  }
   const admin = DEMO ? await setupDemoDb() : await setupTestDb();
 
   // ---- Stage 1: tree ----
