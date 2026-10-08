@@ -101,7 +101,8 @@ async function revokePV(grantId, adminId) {
   const user = await User.findById(grant.user);
   if (user) {
     const chain = [user._id, ...(user.uplineChain || [])];
-    await User.updateMany({ _id: { $in: chain } }, { $inc: { cumulativeTeamPV: -grant.pv } });
+    // The grant only added team PV to the upline (see creditPVEarnings), not to the user
+    await User.updateMany({ _id: { $in: user.uplineChain || [] } }, { $inc: { cumulativeTeamPV: -grant.pv } });
     await recomputeRankForChain(chain, { period: periodOf(new Date()) });
   }
 

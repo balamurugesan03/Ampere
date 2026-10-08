@@ -11,7 +11,10 @@
     "seed:prod": "node src/seedProd.js",
     "test:mlm-flow": "node src/scripts/mlmFlowTest.js",
     "seed:mlm-demo": "node src/scripts/mlmFlowTest.js --demo",
-    "erase:mlm-demo": "node src/scripts/mlmFlowTest.js --erase"
+    "erase:mlm-demo": "node src/scripts/mlmFlowTest.js --erase",
+    "test:user-purchases": "node src/scripts/userPurchaseCheck.js",
+    "copy:live-db": "node src/scripts/copyLiveDb.js",
+    "audit:users": "node src/scripts/auditUsers.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
