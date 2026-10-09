@@ -63,7 +63,7 @@ export default function Backup() {
     <div>
       <PageHeader
         title="Data Backup"
-        description="Export module-wise data to Excel. Each module becomes a separate sheet in one .xlsx file."
+        description="Export module-wise data to Excel. Each module's full records go in their own sheet (tabs at the bottom of Excel), with a Summary sheet at the end."
         icon={DatabaseBackup}
         action={
           <Button

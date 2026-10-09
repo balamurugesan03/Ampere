@@ -81,12 +81,7 @@ async function exportBackup(req, res) {
   workbook.creator = 'Ampere Admin';
   workbook.created = new Date();
 
-  const summary = workbook.addWorksheet('Summary');
-  summary.columns = [
-    { header: 'Module', key: 'module', width: 28 },
-    { header: 'Records', key: 'records', width: 12 },
-  ];
-  summary.getRow(1).font = { bold: true };
+  const counts = [];
 
   for (const m of selected) {
     const docs = await m.model.find().sort({ createdAt: 1, _id: 1 }).lean();
@@ -110,7 +105,21 @@ async function exportBackup(req, res) {
       if (rows.some((r) => r[k] instanceof Date)) sheet.getColumn(i + 1).numFmt = 'yyyy-mm-dd hh:mm:ss';
     });
 
-    summary.addRow({ module: m.label, records: rows.length });
+    counts.push({ sheet: sheet.name, records: rows.length });
+  }
+
+  // Data sheets come first so the file opens on real records; the summary sits at the
+  // end with links to each sheet. A single-module export needs no summary.
+  if (selected.length > 1) {
+    const summary = workbook.addWorksheet('Summary');
+    summary.columns = [
+      { header: 'Module', key: 'module', width: 28 },
+      { header: 'Records', key: 'records', width: 12 },
+    ];
+    summary.getRow(1).font = { bold: true };
+    for (const c of counts) {
+      summary.addRow({ module: { text: c.sheet, hyperlink: `#'${c.sheet}'!A1` }, records: c.records });
+    }
   }
 
   const stamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, '-');
