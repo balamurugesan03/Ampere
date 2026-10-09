@@ -19,6 +19,7 @@ const {
   updateBanner,
   deleteBanner,
 } = require('../controllers/bannerController');
+const { listBackupModules, exportBackup } = require('../controllers/backupController');
 const { protect } = require('../middleware/auth');
 const requireRole = require('../middleware/requireRole');
 const upload = require('../middleware/upload');
@@ -58,5 +59,8 @@ router.get('/banners', listAllBanners);
 router.post('/banners', createBanner);
 router.put('/banners/:id', updateBanner);
 router.delete('/banners/:id', deleteBanner);
+
+router.get('/backup/modules', listBackupModules);
+router.get('/backup/export', exportBackup);
 
 module.exports = router;

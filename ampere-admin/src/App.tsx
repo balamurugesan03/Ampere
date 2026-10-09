@@ -14,6 +14,7 @@ import Network from './pages/Network';
 import Payouts from './pages/Payouts';
 import RankSettings from './pages/RankSettings';
 import Banners from './pages/Banners';
+import Backup from './pages/Backup';
 
 function ProtectedRoutes() {
   const { user, loading } = useAuth();
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/payouts" element={<Payouts />} />
           <Route path="/ranks" element={<RankSettings />} />
           <Route path="/banners" element={<Banners />} />
+          <Route path="/backup" element={<Backup />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -12,6 +12,7 @@ import {
   Trophy,
   Share2,
   Wallet,
+  DatabaseBackup,
   LogOut,
   type LucideIcon,
 } from 'lucide-react';
@@ -59,6 +60,10 @@ const NAV_GROUPS: { label: string; items: NavItem[] }[] = [
   {
     label: 'People',
     items: [{ to: '/users', label: 'Users', icon: UsersIcon }],
+  },
+  {
+    label: 'System',
+    items: [{ to: '/backup', label: 'Data Backup', icon: DatabaseBackup }],
   },
 ];
 
