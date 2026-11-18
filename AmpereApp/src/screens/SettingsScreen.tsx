@@ -72,10 +72,13 @@ export default function SettingsScreen({ navigation }: Props) {
           </View>
 
           <View style={[styles.listCard, { marginTop: 14 }]}>
-            <View style={styles.row}>
+            <Pressable
+              style={({ pressed }) => [styles.row, pressed && { opacity: 0.7 }]}
+              onPress={() => navigation.navigate('PrivacyPolicy')}
+            >
               <Text style={styles.rowLabel}>Privacy Policy</Text>
               <Chevron />
-            </View>
+            </Pressable>
 
             <View style={styles.row}>
               <Text style={styles.rowLabel}>Terms & Conditions</Text>

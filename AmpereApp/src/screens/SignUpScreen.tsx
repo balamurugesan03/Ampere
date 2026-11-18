@@ -10,6 +10,7 @@ import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import { useAuth } from '../context/AuthContext';
 import { useValidateReferralCode } from '../api/hooks';
+import PrivacyFooter from '../components/PrivacyFooter';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -164,6 +165,8 @@ export default function SignUpScreen({ navigation }: Props) {
             </Text>
           </Text>
         </View>
+
+        <PrivacyFooter onPress={() => navigation.navigate('PrivacyPolicy')} />
       </ScrollView>
     </SafeAreaView>
   );

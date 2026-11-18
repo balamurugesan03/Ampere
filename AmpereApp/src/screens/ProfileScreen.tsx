@@ -9,6 +9,7 @@ import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import BottomNav from '../components/BottomNav';
+import PrivacyFooter from '../components/PrivacyFooter';
 import { useAuth } from '../context/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
@@ -196,6 +197,8 @@ export default function ProfileScreen({ navigation }: Props) {
             </Pressable>
           ))}
         </View>
+
+        <PrivacyFooter showVersion onPress={() => navigation.navigate('PrivacyPolicy')} />
       </ScrollView>
 
       <BottomNav active="Profile" navigation={navigation} />

@@ -35,6 +35,7 @@ import WishlistScreen from './src/screens/WishlistScreen';
 import OrdersScreen from './src/screens/OrdersScreen';
 import MyTeamScreen from './src/screens/MyTeamScreen';
 import MyEarningsScreen from './src/screens/MyEarningsScreen';
+import PrivacyPolicyScreen from './src/screens/PrivacyPolicyScreen';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   // no-op: safe to ignore if already hidden / not supported
@@ -79,6 +80,7 @@ function RootNavigator() {
         <Stack.Screen name="Orders" component={OrdersScreen} />
         <Stack.Screen name="MyTeam" component={MyTeamScreen} />
         <Stack.Screen name="MyEarnings" component={MyEarningsScreen} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

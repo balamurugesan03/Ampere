@@ -9,6 +9,7 @@ import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 import { shadows } from '../theme/shadows';
 import { useAuth } from '../context/AuthContext';
+import PrivacyFooter from '../components/PrivacyFooter';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -210,6 +211,8 @@ export default function SignInScreen({ navigation }: Props) {
             </Text>
           </Text>
         </View>
+
+        <PrivacyFooter onPress={() => navigation.navigate('PrivacyPolicy')} />
       </View>
     </SafeAreaView>
   );

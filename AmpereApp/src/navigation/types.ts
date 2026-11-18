@@ -15,4 +15,5 @@ export type RootStackParamList = {
   Orders: undefined;
   MyTeam: undefined;
   MyEarnings: undefined;
+  PrivacyPolicy: undefined;
 };
